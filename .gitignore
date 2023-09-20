@@ -1,6 +1,7 @@
 # Django Backend
 /darvenv/
 /lib/
+*.pyc
 /__pycache__/
 /backend/backend/__pycache__/
 /backend/backend/migrations/__pycache__/
@@ -24,14 +25,17 @@
 /backend/.DS_Store
 
 # React Frontend
-/frontend/node_modules/
-/frontend/build/
-/frontend/.env
-/frontend/.env.production
-/frontend/.env.local
-/frontend/.env.development.local
-/frontend/yarn-error.log
-/frontend/yarn.lock
+node_modules
+.DS_Store
+dist
+/dar-frontend/node_modules/
+/dar-frontend/build/
+/dar-frontend/.env
+/fdar-rontend/.env.production
+/dar-frontend/.env.local
+/dar-frontend/.env.development.local
+/dar-frontend/yarn-error.log
+/dar-frontend/yarn.lock
 
 # Other common files
 /.vscode/
