@@ -1,10 +1,7 @@
-import { FoodItemsList } from "./FoodItemsList"
-import Navbar from "./Navbar"
+import React from 'react'
 
-export const Home= ()=> {
-    return (
-        <><Navbar /><FoodItemsList /></>
-
-       
-    )
+export const Home = () => {
+  return (
+    <div>Home</div>
+  )
 }
