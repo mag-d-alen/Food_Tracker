@@ -1,29 +1,25 @@
-import { useState } from "react";
-import { useUpdateFoodItemMutation } from "../../app/apiSlice";
+import { convertUnit } from "../../utils/unitMeasuresConvertor";
 
-
-export const FoodItemCalories = ({ kcal, id }: { kcal: number; id: number }) => {
-  const [newKcal, setNewKcal] = useState(kcal);
-  const [editable, setEditable] = useState(false);
-  const startUpdate = () => {
-    setEditable(!editable);
-  };
-  const submitUpdate = () => {
-    setEditable(!editable);
-    setChanges({ id: id, kcal: newKcal });
-  };
-  const [setChanges, response] = useUpdateFoodItemMutation();
-
+export const FoodItemCalories = ({
+  kcal,
+  unit,
+  setNewKcal,
+  editable,
+}: {
+    kcal: number;
+    unit: string;
+  setNewKcal: (newKcal: number) => void;
+  editable: boolean;
+}) => {
   return (
     <div>
       {editable ? (
         <input
           onChange={(e) => setNewKcal(Number(e.target.value))}
-          value={newKcal}></input>
+          value={kcal}></input>
       ) : (
-        <div onClick={startUpdate}>{newKcal}</div>
+          <div>{kcal} kcal / { convertUnit(unit)}</div>
       )}
-      {editable ? <button onClick={submitUpdate}>Save Changes</button> : null}
     </div>
   );
 };

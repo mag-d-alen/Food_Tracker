@@ -1,29 +1,23 @@
-import { useState } from "react";
-import { useUpdateFoodItemMutation } from "../../app/apiSlice";
-
-
-export const FoodItemName = ({ name, id }: { name: string; id: number }) => {
-  const [newName, setNewName] = useState(name);
-  const [editable, setEditable] = useState(false);
-  const startUpdate = () => {
-    setEditable(!editable);
-  };
-  const submitUpdate = () => {
-    setEditable(!editable);
-    setChanges({ id: id, name: newName });
-  };
-  const [setChanges, response] = useUpdateFoodItemMutation();
-
+export const FoodItemName = ({
+  name,
+  setNewName,
+  editable,
+}: {
+  name: string;
+  setNewName: (name: string) => void;
+  editable?: boolean;
+}) => {
   return (
     <div>
       {editable ? (
-        <input
-          onChange={(e) => setNewName(e.target.value)}
-          value={newName}></input>
+        <>
+          <input
+            onChange={(e) => setNewName(e.target.value)}
+            value={name}></input>
+        </>
       ) : (
-        <div onClick={startUpdate}>{newName}</div>
+        <div>{name}</div>
       )}
-      {editable ? <button onClick={submitUpdate}>Save Changes</button> : null}
     </div>
   );
 };

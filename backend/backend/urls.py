@@ -20,10 +20,11 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from home.views import FoodItemView
+from home.views import MealView, FoodItemView
 
 router = routers.DefaultRouter()
 router.register(r'fooditems', FoodItemView, 'fooditem' )
+router.register(r'meals', MealView, 'meal' )
 
 urlpatterns = [
     path('admin/', admin.site.urls),

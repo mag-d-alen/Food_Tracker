@@ -1,7 +1,14 @@
-import React from 'react'
 
-export const AddMealModal = () => {
+
+export const AddMealModal = ({
+  closeAddMeal,
+}: {
+  closeAddMeal: () => void;
+}) => {
   return (
-    <div>AddMealModal</div>
-  )
-}
+    <div>
+      AddMealModal
+      <button onClick={closeAddMeal}>close</button>
+    </div>
+  );
+};

@@ -3,7 +3,7 @@
     font-family: "Mooli", sans-serif;
     line-height: 1.5;
     font-weight: 400;
-    color-scheme: light dark;
+    color-scheme: dark;
     color: rgba(255, 255, 255, 0.87);
     background-color: #242424;
     font-synthesis: none;
@@ -19,7 +19,7 @@ a {
 }
 
 a:hover {
-    color: #535bf2;
+    color: #0b712b;
     transform: scale(1.2);
     -webkit-transform: scale(1.2);
 }
@@ -46,10 +46,12 @@ button {
     background-color: #1a1a1a;
     cursor: pointer;
     transition: border-color 0.25s;
+    text-transform: uppercase;
+    margin: 0.5rem 0;
 }
 
 button:hover {
-    border-color: #646cff;
+    border-color: #0b712b;
 }
 
 button:focus,
@@ -57,9 +59,19 @@ button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
 }
 
-input {
-    padding: 0.5rem;
-    border-color: light-gray;
+input,
+select,
+option {
+    border-radius: 8px;
+    border: 0.5px solid rgb(176, 207, 176);
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    transition: border-color 0.25s;
+    text-transform: uppercase;
+    margin: 0.8rem 0.3rem;
+    width: 70%;
 }
 
 @media (prefers-color-scheme: light) {
@@ -68,7 +80,7 @@ input {
         background-color: #ffffff;
     }
     a:hover {
-        color: #747bff;
+        color: #0b712b;
     }
     button {
         background-color: #f9f9f9;

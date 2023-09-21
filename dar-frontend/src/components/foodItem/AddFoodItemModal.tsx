@@ -11,6 +11,7 @@ export const AddFoodItemModal = ({
     name: "soya cappuccino",
     kcal: 59,
     unit: "PC",
+    qty:1
   });
   const [addFoodItem, response] = useAddFoodItemMutation();
   const [isError, setError] = useState("");
@@ -46,7 +47,7 @@ export const AddFoodItemModal = ({
             updateNewItem={updateNewItem}
             newFoodItem={newFoodItem}
           />
-          <button onClick={addItem}>submit</button>
+          <button onClick={addItem}>Add New Item</button>
         </>
       )}
     </div>

@@ -1,9 +1,9 @@
 import { JSX } from "react/jsx-runtime";
-import { FoodItemType } from "../types";
-import { FoodItemCard } from "./foodItem/FoodItemCard";
-import { useGetAllFoodItemsQuery } from "../app/apiSlice";
+import { FoodItemType } from "../../types";
+import { FoodItemCard } from "./FoodItemCard";
+import { useGetAllFoodItemsQuery } from "../../app/apiSlice";
 import { useState } from "react";
-import { AddFoodItemModal } from "./foodItem/AddFoodItemModal";
+import { AddFoodItemModal } from "./AddFoodItemModal";
 
 export const FoodItemsList = () => {
   const {
@@ -14,19 +14,19 @@ export const FoodItemsList = () => {
   const [addItemVisible, setAddItemVisible] = useState(false);
   const toggleAddItemForm = () => setAddItemVisible(!addItemVisible);
   return (
-    <div>
+    <div  style={{display:"flex", flexDirection:'column', justifyContent:"center", alignItems:"center"}}>
       {isLoading ? <div>Loading...</div> : null}
-      {!addItemVisible ? (
+      {foodItems && !addItemVisible ? (
         <button onClick={toggleAddItemForm}>Add Food Item</button>
       ) : null}
-      {addItemVisible ? (
+      {foodItems && addItemVisible ? (
         <>
           <AddFoodItemModal closeAddFoodItem={toggleAddItemForm} />
           <button onClick={() => setAddItemVisible(false)}>
             Back to All Food
           </button>
         </>
-      ) : isSuccess ? (
+      ) : isSuccess && foodItems ? (
         <>
           <h2>All Food Items</h2>
           {foodItems.map((item: JSX.IntrinsicAttributes & FoodItemType) => (

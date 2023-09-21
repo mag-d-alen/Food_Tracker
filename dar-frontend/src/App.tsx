@@ -3,7 +3,10 @@ import "./App.css";
 import Navbar from "./components/Navbar.tsx";
 import { MealsList } from "./components/meals/MealsList.tsx";
 import { Home } from "./components/Home.tsx";
-import { FoodItemsList } from "./components/FoodItemsList.tsx";
+import { FoodItemsList } from "./components/foodItem/FoodItemsList.tsx";
+
+
+
 
 function App() {
   return (

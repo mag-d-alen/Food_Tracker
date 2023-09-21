@@ -1,34 +1,25 @@
-import { useState } from "react";
-import { useUpdateFoodItemMutation } from "../../app/apiSlice";
+import { convertUnit } from "../../utils/unitMeasuresConvertor";
 
 export const FoodItemUnit = ({
   unit,
-  id,
+  editable,
+  setNewUnit,
 }: {
   unit: string;
-  id: number;
+  editable: boolean;
+  setNewUnit: (unit: string) => void;
 }) => {
-  const [newUnit, setNewUnit] = useState(unit);
-  const [editable, setEditable] = useState(false);
-  const startUpdate = () => {
-    setEditable(!editable);
-  };
-  const submitUpdate = () => {
-    setEditable(!editable);
-    setChanges({ id: id, unit: newUnit });
-  };
-  const [setChanges] = useUpdateFoodItemMutation();
-
   return (
     <div>
       {editable ? (
-        <input
-          onChange={(e) => setNewUnit(e.target.value)}
-          value={newUnit}></input>
+        <select name="unit" onChange={(e) => setNewUnit(e.target.value)}>
+          <option value="PC">1 piece</option>
+          <option value="GR">100 gram</option>
+          <option value="ML">100 ml</option>
+        </select>
       ) : (
-        <div onClick={startUpdate}>{newUnit}</div>
+        <div>unit: {convertUnit(unit)}</div>
       )}
-      {editable ? <button onClick={submitUpdate}>Save Changes</button> : null}
     </div>
   );
 };

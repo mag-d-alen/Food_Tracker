@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'home.apps.HomeConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -52,10 +53,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_WHITELIST = ['http://localhost:5173', 'http://localhost:3000']
+CORS_ORIGIN_WHITELIST = ['http://localhost:5173', 'http://localhost:3000' ]
 ROOT_URLCONF = 'backend.urls'
 SESSION_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SECURE = True
 CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://localhost:5173']
+ADMIN_URL = 'admin/'
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 TEMPLATES = [
     {
