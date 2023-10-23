@@ -15,18 +15,18 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
-from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from home.views import MealView, FoodItemView
+from home.views import FoodItemView, MealView, LoginView
 
 router = routers.DefaultRouter()
-router.register(r'fooditems', FoodItemView, 'fooditem' )
-router.register(r'meals', MealView, 'meal' )
+router.register(r'fooditems', FoodItemView, 'fooditem')
+router.register(r'meals', MealView, 'meal')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)),
+    path('api/login/', LoginView.as_view(), name='custom-login'),
+
 ]

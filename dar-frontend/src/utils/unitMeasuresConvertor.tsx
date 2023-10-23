@@ -8,7 +8,7 @@ const unitChoices: UnitChoicesType = {
   C: "1 cup",
 };
 
-export const convertUnit = (unit: any):string => {
+export const convertUnit = (unit: any): string => {
   const dynamicKey: keyof UnitChoicesType = unit;
   return unitChoices[dynamicKey];
 };

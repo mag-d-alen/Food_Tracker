@@ -1,22 +1,25 @@
 // Or from '@reduxjs/toolkit/query/react'
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { FoodItemType, MealType } from "../types";
+import { MealType, SingleFoodItemType } from "../types";
 
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api" }),
-  tagTypes: ["FoodItem", "Meal"],
+  tagTypes: ["FoodItem", "Meal", "User", "Meals"],
   endpoints: (builder) => ({
     getAllFoodItems: builder.query({
       query: () => `/fooditems`,
       providesTags: ["FoodItem"],
     }),
 
-    getFoodItem: builder.query<FoodItemType, number>({
+    getFoodItem: builder.query<SingleFoodItemType, number>({
       query: (id: number) => `/fooditems/${id}/`,
     }),
 
-    updateFoodItem: builder.mutation<FoodItemType, Partial<FoodItemType>>({
+    updateFoodItem: builder.mutation<
+      SingleFoodItemType,
+      Partial<SingleFoodItemType>
+    >({
       query: (data) => ({
         url: `/fooditems/${data.id}/`,
         method: "PATCH",
@@ -28,7 +31,7 @@ export const apiSlice = createApi({
     }),
 
     addFoodItem: builder.mutation<void, any>({
-      query: ({ body }: { body: FoodItemType }) => ({
+      query: ({ body }: { body: SingleFoodItemType }) => ({
         url: "/fooditems/",
         method: "POST",
         body: body,
@@ -46,20 +49,21 @@ export const apiSlice = createApi({
 
     getAllMeals: builder.query({
       query: () => `/meals`,
-      providesTags: ["Meal"],
+      providesTags: ["Meals"],
     }),
 
     getMeal: builder.query<MealType, number>({
       query: (id: number) => `/meals/${id}/`,
+      providesTags: ["Meal"],
     }),
 
-    updateMeal: builder.mutation<MealType, Partial<MealType>>({
-      query: (data) => ({
-        url: `/meals/${data.id}/`,
-        method: "PATCH",
-        body: { ...data },
+    updateMeal: builder.mutation<any, any>({
+      query: (body: MealType) => ({
+        url: `/meals/${body.id}/`,
+        method: "PUT",
+        body: body,
       }),
-      invalidatesTags: ["Meal"],
+      invalidatesTags: ["Meal", "Meals"],
     }),
 
     addMeal: builder.mutation<void, any>({
@@ -78,6 +82,15 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Meal"],
     }),
+
+    loginUser: builder.mutation<void, any>({
+      query: (body: { username: string; password: string }) => ({
+        url: "/login/",
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 export const {
@@ -90,4 +103,5 @@ export const {
   useGetAllMealsQuery,
   useUpdateMealMutation,
   useDeleteMealMutation,
+  useLoginUserMutation,
 } = apiSlice;

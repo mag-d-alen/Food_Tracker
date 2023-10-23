@@ -1,30 +1,19 @@
-import { FoodItemType } from "../../types";
-import {
-  useDeleteFoodItemMutation,
-  useUpdateFoodItemMutation,
-} from "../../app/apiSlice";
-import { FoodItemName } from "./FoodItemName";
-import { FoodItemCalories } from "./FoodItemsCalories";
-import { FoodItemUnit } from "./FoodItemUnits";
+import { FoodItemType, SingleFoodItemType } from "../../types";
+import { useDeleteFoodItemMutation } from "../../app/apiSlice";
 import { useState } from "react";
-import { Toast } from "../Toast";
-import { FoodItemQty } from "./FoodItemQty";
+import { EditFoodItemModal } from "./EditFoodItemModal";
+import { convertUnit } from "../../utils/unitMeasuresConvertor";
 
-export const FoodItemCard = (item: FoodItemType): JSX.Element => {
-  const { id, name, kcal, unit, qty } = { ...item };
+export const FoodItemCard = ({
+  item,
+}: {
+  item: SingleFoodItemType;
+}): JSX.Element => {
+  const { id, name, kcal, unit } = { ...item };
+  console.log(item);
   const [deleteFoodItem] = useDeleteFoodItemMutation();
-
-  const [newName, setNewName] = useState(name);
-  const [newKcal, setNewKcal] = useState(kcal);
-  const [newUnit, setNewUnit] = useState(unit);
-  const [newQty, setNewQty] = useState(qty);
-  
-  const [editable, setEditable] = useState(false);
-
-  const [setChanges, { isSuccess, isError, isLoading }] =
-    useUpdateFoodItemMutation();
-
-  const toggleEditable = () => setEditable(!editable);
+  const [isEditing, setIsEditing] = useState(false);
+  const toggleEditable = () => setIsEditing(true);
 
   return (
     <div
@@ -36,51 +25,22 @@ export const FoodItemCard = (item: FoodItemType): JSX.Element => {
         display: "flex",
         width: "25rem",
         flexDirection: "column",
-      }}>
-      <FoodItemName
-        name={newName}
-        setNewName={setNewName}
-        editable={editable}
-      />
-      <FoodItemCalories
-        kcal={newKcal}
-        unit={unit}
-        setNewKcal={setNewKcal}
-        editable={editable}
-      />
-      <FoodItemUnit
-        unit={newUnit}
-        setNewUnit={setNewUnit}
-        editable={editable}
-      />
-      <FoodItemQty qty={newQty} setNewQty={setNewQty} editable={editable} />
-      
-      {isLoading ? (
-        <Toast text={"saving your changes..."} success={isSuccess} />
-      ) : null}
-      {isError ? (
-        <Toast
-          text={"An unexpected error occured, try again, please..."}
-          success={isError}
-        />
-      ) : null}
-      {isSuccess ? (
-        <Toast text={"Changes saved successfully"} success={isSuccess} />
-      ) : null}
-
-      {!editable && !isLoading ? (
-        <button onClick={toggleEditable}>edit</button>
-      ) : null}
-      {editable && !isLoading ? (
-        <button
-          onClick={() => {
-            setChanges({ name: newName, unit: newUnit, kcal: newKcal, id: id, qty:newQty});
-            toggleEditable();
-          }}>
-          save
-        </button>
+        alignItems: "center",
+        borderColor: "#7a9f83b9",
+        color: "#7a9f83",
+        fontSize: "1.1rem",
+        backgroundColor: "#839c89a",
+      }}
+    >
+      <h3>{name.toLocaleUpperCase()}</h3>
+      <h4>
+        {kcal} kcal per {convertUnit(unit)}
+      </h4>
+      {isEditing ? (
+        <EditFoodItemModal item={item} closeModal={() => setIsEditing(false)} />
       ) : null}
       <button onClick={() => deleteFoodItem(id)}>Remove Item</button>
+      {!isEditing ? <button onClick={toggleEditable}>Edit Item</button> : null}
     </div>
   );
 };

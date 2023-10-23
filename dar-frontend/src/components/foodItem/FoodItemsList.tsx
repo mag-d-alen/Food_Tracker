@@ -1,5 +1,5 @@
 import { JSX } from "react/jsx-runtime";
-import { FoodItemType } from "../../types";
+import { FoodItemType, SingleFoodItemType } from "../../types";
 import { FoodItemCard } from "./FoodItemCard";
 import { useGetAllFoodItemsQuery } from "../../app/apiSlice";
 import { useState } from "react";
@@ -13,8 +13,16 @@ export const FoodItemsList = () => {
   } = useGetAllFoodItemsQuery({ refetchOnMountOrArgChange: true });
   const [addItemVisible, setAddItemVisible] = useState(false);
   const toggleAddItemForm = () => setAddItemVisible(!addItemVisible);
+
   return (
-    <div  style={{display:"flex", flexDirection:'column', justifyContent:"center", alignItems:"center"}}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       {isLoading ? <div>Loading...</div> : null}
       {foodItems && !addItemVisible ? (
         <button onClick={toggleAddItemForm}>Add Food Item</button>
@@ -29,9 +37,11 @@ export const FoodItemsList = () => {
       ) : isSuccess && foodItems ? (
         <>
           <h2>All Food Items</h2>
-          {foodItems.map((item: JSX.IntrinsicAttributes & FoodItemType) => (
-            <FoodItemCard key={item.key} {...item} />
-          ))}
+          {foodItems.map(
+            (item: JSX.IntrinsicAttributes & SingleFoodItemType) => (
+              <FoodItemCard item={item} key={JSON.stringify(item)} />
+            )
+          )}
         </>
       ) : null}
     </div>

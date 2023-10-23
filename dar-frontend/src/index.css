@@ -3,7 +3,7 @@
     font-family: "Mooli", sans-serif;
     line-height: 1.5;
     font-weight: 400;
-    color-scheme: dark;
+    color-scheme: inherit;
     color: rgba(255, 255, 255, 0.87);
     background-color: #242424;
     font-synthesis: none;
@@ -11,6 +11,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 a {
@@ -40,7 +42,7 @@ button {
     border-radius: 8px;
     border: 1px solid transparent;
     padding: 0.6em 1.2em;
-    font-size: 1em;
+    font-size: 1rem;
     font-weight: 500;
     font-family: inherit;
     background-color: #1a1a1a;
@@ -52,6 +54,7 @@ button {
 
 button:hover {
     border-color: #0b712b;
+    background-color: white;
 }
 
 button:focus,
@@ -71,7 +74,13 @@ option {
     transition: border-color 0.25s;
     text-transform: uppercase;
     margin: 0.8rem 0.3rem;
-    width: 70%;
+    max-width: 70%;
+    min-width: fit-content;
+    flex: 1;
+}
+
+input {
+    min-width: fit-content;
 }
 
 @media (prefers-color-scheme: light) {

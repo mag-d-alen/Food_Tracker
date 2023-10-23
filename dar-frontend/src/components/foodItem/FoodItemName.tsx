@@ -1,23 +1,22 @@
 export const FoodItemName = ({
   name,
   setNewName,
-  editable,
 }: {
   name: string;
   setNewName: (name: string) => void;
-  editable?: boolean;
 }) => {
+  const getPlaceholder = () => (name ? name : "food name");
   return (
-    <div>
-      {editable ? (
-        <>
-          <input
-            onChange={(e) => setNewName(e.target.value)}
-            value={name}></input>
-        </>
-      ) : (
-        <div>{name}</div>
-      )}
-    </div>
+    <>
+      <label style={{ color: "#7a9f83db" }} htmlFor="calories">
+        name
+      </label>
+      <input
+        placeholder={getPlaceholder()}
+        name="name"
+        onChange={(e) => setNewName(e.target.value)}
+        value={name}
+      ></input>
+    </>
   );
 };

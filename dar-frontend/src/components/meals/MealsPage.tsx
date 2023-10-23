@@ -7,7 +7,7 @@ import { MealCard } from "./MealCard";
 import moment from "moment";
 import { TotalDailyKcal } from "../TotalDailyKcal";
 
-export const MealsList = () => {
+export const MealsPage = () => {
   const { data: meals, isLoading } = useGetAllMealsQuery({
     refetchOnMountOrArgChange: true,
   });
@@ -22,20 +22,18 @@ export const MealsList = () => {
         <>
           <h2>Meals {moment().format("DD.MM.YYYY")}</h2>
           <TotalDailyKcal allMeals={meals} />
-          <button onClick={toggleAddMealForm}>Add a meal</button>
         </>
       ) : null}
+      <button onClick={toggleAddMealForm}>Add a meal</button>
       {addMealVisible ? (
         <>
           <AddMealModal closeAddMeal={toggleAddMealForm} />
           <button onClick={() => setAddMealVisible(false)}>Back</button>
         </>
       ) : meals ? (
-        <>
-          {meals.map((item: JSX.IntrinsicAttributes & FoodItemType) => (
-            <MealCard key={item.key} {...item} />
-          ))}
-        </>
+        meals.map((item: JSX.IntrinsicAttributes & FoodItemType) => (
+          <MealCard key={item.id} {...item} />
+        ))
       ) : (
         <div>No recent meals</div>
       )}

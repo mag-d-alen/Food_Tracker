@@ -22,6 +22,9 @@ const Navbar = () => {
       <div style={{ padding: "0.5rem" }}>
         <Link to="/my-meals">My Meals</Link>
       </div>
+      <div style={{ padding: "0.5rem" }}>
+        <Link to="/login">Login</Link>
+      </div>
     </nav>
   );
 };
