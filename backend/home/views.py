@@ -15,7 +15,8 @@ from .serializers import FoodItemSerializer, MealSerializer, UserSerializer
 
 class FoodItemView(viewsets.ModelViewSet):
     serializer_class = FoodItemSerializer
-    queryset = FoodItem.objects.all()
+    queryset = FoodItem.objects.all().order_by('-created_at')
+
 
 class MealView(viewsets.ModelViewSet):
     serializer_class = MealSerializer

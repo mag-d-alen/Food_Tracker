@@ -3,8 +3,8 @@ import "./App.css";
 import Navbar from "./components/Navbar.tsx";
 import { Home } from "./components/Home.tsx";
 import { FoodItemsList } from "./components/foodItem/FoodItemsList.tsx";
-import { Login } from "./components/auth/login.tsx";
 import { MealsPage } from "./components/meals/MealsPage.tsx";
+import { Login } from "./components/auth/Login.tsx";
 
 function App() {
   return (

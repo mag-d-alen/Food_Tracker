@@ -33,7 +33,7 @@ export const FoodItemCardForm = ({
         left: 0,
         height: "100vh",
         width: "100vw",
-        backgroundColor: "rgba(3, 89, 40, 0.343)",
+        backgroundColor: "rgba(14, 90, 47, 0.601)",
         visibility: "visible",
         opacity: 1,
         transition: "visibility 0s, opacity 0.5s ease-in-out",

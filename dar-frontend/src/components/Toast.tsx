@@ -16,10 +16,23 @@ export const Toast = ({
           backgroundColor: success ? "#00800040" : "pink",
           borderRadius: "0.3rem",
           display: visible ? "flex" : "none",
+          height: visible ? "2rem" : "0px",
           alignItems: "center",
           justifyContent: "space-between",
-        }}>
-              {text} <button style={{padding: "0.3rem 0.6rem", margin:'0', color:"white", backgroundColor:"inherit"}} onClick={() => setVisible(false)}>x</button>
+        }}
+      >
+        {text}
+        <button
+          style={{
+            padding: "0.3rem 0.6rem",
+            margin: "0",
+            color: "white",
+            backgroundColor: "inherit",
+          }}
+          onClick={() => setVisible(false)}
+        >
+          x
+        </button>
       </div>
     </>
   );

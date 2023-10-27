@@ -10,8 +10,7 @@ export const LoadingToasts = ({
   isSuccess: boolean;
 }) => {
   return (
-    <div>
-      {" "}
+    <>
       {isLoading ? (
         <Toast text={"saving your changes..."} success={isSuccess} />
       ) : null}
@@ -24,6 +23,6 @@ export const LoadingToasts = ({
       {isSuccess ? (
         <Toast text={"Changes saved successfully"} success={isSuccess} />
       ) : null}
-    </div>
+    </>
   );
 };

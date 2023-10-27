@@ -30,11 +30,7 @@ export const AddFoodItemModal = ({
   return (
     <div>
       <h2>Add New Item to the food items library</h2>
-      <LoadingToasts
-        isError={isError}
-        isLoading={isLoading}
-        isSuccess={isSuccess}
-      />
+
       {!isLoading && !isSuccess && !isError && (
         <FoodItemCardForm
           newName={newFoodItem.name}

@@ -19,17 +19,15 @@ export const FoodItemCard = ({
     <div
       style={{
         padding: "1rem",
-        border: "1px solid lightgray",
         borderRadius: "0.3rem",
-        margin: "1rem",
+        margin: "1rem 0",
         display: "flex",
-        width: "25rem",
+        maxWidth: "25rem",
         flexDirection: "column",
         alignItems: "center",
-        borderColor: "#7a9f83b9",
         color: "#7a9f83",
         fontSize: "1.1rem",
-        backgroundColor: "#839c89a",
+        backgroundColor: "#ffffffd6",
       }}
     >
       <h3>{name.toLocaleUpperCase()}</h3>

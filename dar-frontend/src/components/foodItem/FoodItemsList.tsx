@@ -4,12 +4,13 @@ import { FoodItemCard } from "./FoodItemCard";
 import { useGetAllFoodItemsQuery } from "../../app/apiSlice";
 import { useState } from "react";
 import { AddFoodItemModal } from "./AddFoodItemModal";
+import { LoadingToasts } from "../LoadingToasts";
 
 export const FoodItemsList = () => {
   const {
     data: foodItems,
     isLoading,
-    isSuccess,
+    isError,
   } = useGetAllFoodItemsQuery({ refetchOnMountOrArgChange: true });
   const [addItemVisible, setAddItemVisible] = useState(false);
   const toggleAddItemForm = () => setAddItemVisible(!addItemVisible);
@@ -19,29 +20,46 @@ export const FoodItemsList = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
       }}
     >
-      {isLoading ? <div>Loading...</div> : null}
-      {foodItems && !addItemVisible ? (
-        <button onClick={toggleAddItemForm}>Add Food Item</button>
+      <LoadingToasts
+        isLoading={isLoading}
+        isError={isError}
+        isSuccess={false}
+      />
+      {addItemVisible ? (
+        <AddFoodItemModal closeAddFoodItem={toggleAddItemForm} />
       ) : null}
-      {foodItems && addItemVisible ? (
+      {foodItems ? (
         <>
-          <AddFoodItemModal closeAddFoodItem={toggleAddItemForm} />
-          <button onClick={() => setAddItemVisible(false)}>
-            Back to All Food
-          </button>
-        </>
-      ) : isSuccess && foodItems ? (
-        <>
-          <h2>All Food Items</h2>
-          {foodItems.map(
-            (item: JSX.IntrinsicAttributes & SingleFoodItemType) => (
-              <FoodItemCard item={item} key={JSON.stringify(item)} />
-            )
-          )}
+          <h2>All Food food items</h2>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              alignContent: "center",
+              justifyContent: "space-around",
+            }}
+          >
+            <button style={{ height: "5rem" }} onClick={toggleAddItemForm}>
+              Add Food Item
+            </button>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                height: "80vh",
+                overflowY: "auto",
+                borderRadius: "0.3rem",
+              }}
+            >
+              {foodItems.map(
+                (item: JSX.IntrinsicAttributes & SingleFoodItemType) => (
+                  <FoodItemCard item={item} key={JSON.stringify(item)} />
+                )
+              )}
+            </div>
+          </div>
         </>
       ) : null}
     </div>

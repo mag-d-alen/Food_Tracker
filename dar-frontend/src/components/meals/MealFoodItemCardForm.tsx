@@ -1,6 +1,7 @@
 import { useGetAllFoodItemsQuery } from "../../app/apiSlice";
 import { FoodItemCalories } from "../foodItem/FoodItemsCalories";
 import { FoodItemUnit } from "../foodItem/FoodItemUnit";
+import { LoadingToasts } from "../LoadingToasts";
 
 import { SelectFoodItem } from "./SelectFoodItem";
 
@@ -24,7 +25,7 @@ export const MealFoodItemCardForm = ({
   handleSubmit: () => void;
   closeModal: () => void;
 }) => {
-  const { data, isLoading } = useGetAllFoodItemsQuery({
+  const { data, isLoading, isError } = useGetAllFoodItemsQuery({
     refetchOnMountOrArgChange: true,
   });
   return (
@@ -61,11 +62,15 @@ export const MealFoodItemCardForm = ({
         >
           x
         </button>
-        {isLoading ? (
-          <div>loading....</div>
-        ) : (
+        <LoadingToasts
+          isLoading={isLoading}
+          isError={isError}
+          isSuccess={false}
+        />
+        {data ? (
           <SelectFoodItem foodItems={data} setNewItem={setNewItem!} />
-        )}
+        ) : null}
+
         <FoodItemCalories kcal={newKcal} unit={newUnit} canEdit={false} />
         <FoodItemUnit
           canEditUnit={false}

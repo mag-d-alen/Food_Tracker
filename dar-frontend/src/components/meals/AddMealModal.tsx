@@ -40,6 +40,7 @@ export const AddMealModal = ({
           {newMeal.food_items[0].name ? (
             <button onClick={addItem}>Save meal info</button>
           ) : null}
+          <button onClick={closeAddMeal}>Back</button>
         </>
       ) : (
         <LoadingToasts

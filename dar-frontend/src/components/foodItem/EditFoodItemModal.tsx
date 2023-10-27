@@ -3,6 +3,7 @@ import { useUpdateFoodItemMutation } from "../../app/apiSlice";
 import { useState } from "react";
 import { Toast } from "../Toast";
 import { FoodItemCardForm } from "./FoodItemCardForm";
+import { LoadingToasts } from "../LoadingToasts";
 
 export const EditFoodItemModal = ({
   item,
@@ -32,7 +33,11 @@ export const EditFoodItemModal = ({
         transition: "visibility 0s, opacity 0.5s ease-in-out",
       }}
     >
-      {isError ? <Toast text={status} success={isSuccess} /> : null}
+      <LoadingToasts
+        isError={isError}
+        isLoading={isLoading}
+        isSuccess={isSuccess}
+      />
       <FoodItemCardForm
         closeModal={closeModal}
         newName={newName}

@@ -15,7 +15,6 @@ export const MealForm = (updateNewItem: any, newMeal: any) => {
       {isSuccess ? (
         <SelectFoodItem foodItems={foodItems} setNewItem={updateNewItem} />
       ) : null}
-      <div></div>
     </div>
   );
 };

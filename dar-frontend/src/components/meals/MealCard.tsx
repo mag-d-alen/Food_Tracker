@@ -90,11 +90,11 @@ export const MealCard = (item: any): JSX.Element => {
         padding: "1rem",
         border: "1px solid lightgray",
         borderRadius: "0.3rem",
-        margin: "2rem auto",
         display: "flex",
-        maxWidth: "75vw",
         flexDirection: "column",
         backgroundColor: "lavender",
+        color: "black",
+        margin: "0.5rem 0 1rem 0",
       }}
     >
       {isEditing ? (
