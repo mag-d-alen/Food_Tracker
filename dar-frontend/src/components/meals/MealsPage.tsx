@@ -3,10 +3,10 @@ import { FoodItemType } from "../../types";
 import { useGetAllMealsQuery } from "../../app/apiSlice";
 import { useState } from "react";
 import { AddMealModal } from "./AddMealModal";
-import { MealCard } from "./MealCard";
 import moment from "moment";
 import { TotalDailyKcal } from "../TotalDailyKcal";
 import { LoadingToasts } from "../LoadingToasts";
+import { MealCardWrapper } from "./MealCardWrapper";
 
 export const MealsPage = () => {
   const { data: meals, isLoading } = useGetAllMealsQuery({
@@ -25,14 +25,7 @@ export const MealsPage = () => {
           <TotalDailyKcal allMeals={meals} />
         </>
       ) : null}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row-reverse",
-          padding: "2rem",
-          gap: "1rem",
-        }}
-      >
+      <div className="list-container">
         <button style={{ height: "5rem" }} onClick={toggleAddMealForm}>
           Add a meal
         </button>
@@ -50,7 +43,7 @@ export const MealsPage = () => {
             }}
           >
             {meals.map((item: JSX.IntrinsicAttributes & FoodItemType) => (
-              <MealCard key={item.id} {...item} />
+              <MealCardWrapper key={item.id} {...item} />
             ))}
           </div>
         ) : (

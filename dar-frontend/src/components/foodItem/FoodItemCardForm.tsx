@@ -1,7 +1,8 @@
 import { useGetAllFoodItemsQuery } from "../../app/apiSlice";
-import { FoodItemName } from "./FoodItemName";
+import { EditableItemName } from "../common/EditableItemName";
 import { FoodItemUnit } from "./FoodItemUnit";
 import { FoodItemCalories } from "./FoodItemsCalories";
+import { LoadingToasts } from "../LoadingToasts";
 
 export const FoodItemCardForm = ({
   newName,
@@ -22,45 +23,13 @@ export const FoodItemCardForm = ({
   handleSubmit: () => void;
   closeModal: () => void;
 }) => {
-  const { data, isLoading } = useGetAllFoodItemsQuery({
-    refetchOnMountOrArgChange: true,
-  });
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        height: "100vh",
-        width: "100vw",
-        backgroundColor: "rgba(14, 90, 47, 0.601)",
-        visibility: "visible",
-        opacity: 1,
-        transition: "visibility 0s, opacity 0.5s ease-in-out",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          margin: "10rem auto",
-          width: "fit-content",
-          backgroundColor: "white",
-          borderRadius: "0.3rem",
-          padding: "3rem",
-          alignItems: "center",
-        }}
-      >
-        <button
-          style={{
-            margin: "-2rem -2rem auto auto",
-          }}
-          onClick={closeModal}
-        >
+    <div className="food-items__modal">
+      <div className="food-items__modal--container">
+        <button className="food-items__modal--button" onClick={closeModal}>
           x
         </button>
-        {isLoading ? <div>loading....</div> : null}
-        <FoodItemName name={newName!} setNewName={setNewName!} />
+        <EditableItemName name={newName!} setNewName={setNewName!} />
         <FoodItemCalories
           kcal={newKcal}
           unit={newUnit}

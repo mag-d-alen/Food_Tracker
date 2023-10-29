@@ -1,7 +1,7 @@
 import { FoodItemType } from "../../types";
 import { convertUnit } from "../../utils/unitMeasuresConvertor";
 
-export const MealFoods = ({
+export const MealCardFoodItemCard = ({
   item,
   deleteFoodItem,
 }: {

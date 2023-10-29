@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAddFoodItemMutation } from "../../app/apiSlice";
 import { FoodItemCardForm } from "./FoodItemCardForm";
 import { LoadingToasts } from "../LoadingToasts";
+import { DELAY } from "../../app/constants";
 
 export const AddFoodItemModal = ({
   closeAddFoodItem,
@@ -25,12 +26,15 @@ export const AddFoodItemModal = ({
     addFoodItem({ body: newFoodItem });
     setTimeout(() => {
       closeAddFoodItem();
-    }, 1500);
+    }, DELAY);
   };
   return (
-    <div>
-      <h2>Add New Item to the food items library</h2>
-
+    <>
+      <LoadingToasts
+        isError={isError}
+        isLoading={isLoading}
+        isSuccess={isSuccess}
+      />
       {!isLoading && !isSuccess && !isError && (
         <FoodItemCardForm
           newName={newFoodItem.name}
@@ -43,6 +47,6 @@ export const AddFoodItemModal = ({
           handleSubmit={addItem}
         />
       )}
-    </div>
+    </>
   );
 };

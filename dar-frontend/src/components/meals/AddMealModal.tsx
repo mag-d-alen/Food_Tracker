@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAddMealMutation } from "../../app/apiSlice";
-import { MealForm } from "./MealForm";
+import { AddMealForm } from "./AddMealForm";
 import { SingleFoodItemType } from "../../types";
 import { LoadingToasts } from "../LoadingToasts";
 
@@ -36,7 +36,7 @@ export const AddMealModal = ({
             Meal's name:
             <input onChange={(e) => updateMealName(e.target.value)}></input>
           </div>
-          <MealForm updateNewItem={updateMealFood} newMeal={newMeal} />
+          <AddMealForm updateNewItem={updateMealFood} newMeal={newMeal} />
           {newMeal.food_items[0].name ? (
             <button onClick={addItem}>Save meal info</button>
           ) : null}

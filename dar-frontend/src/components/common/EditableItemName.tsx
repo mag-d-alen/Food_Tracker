@@ -1,4 +1,4 @@
-export const FoodItemName = ({
+export const EditableItemName = ({
   name,
   setNewName,
 }: {

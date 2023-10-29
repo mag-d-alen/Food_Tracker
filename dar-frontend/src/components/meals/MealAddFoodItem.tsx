@@ -3,9 +3,9 @@ import { FoodItemCalories } from "../foodItem/FoodItemsCalories";
 import { FoodItemUnit } from "../foodItem/FoodItemUnit";
 import { LoadingToasts } from "../LoadingToasts";
 
-import { SelectFoodItem } from "./SelectFoodItem";
+import { SelectFoodItem } from "../common/SelectFoodItem";
 
-export const MealFoodItemCardForm = ({
+export const MealAddFoodItem = ({
   newKcal,
   newUnit,
   setNewItem,
@@ -70,7 +70,6 @@ export const MealFoodItemCardForm = ({
         {data ? (
           <SelectFoodItem foodItems={data} setNewItem={setNewItem!} />
         ) : null}
-
         <FoodItemCalories kcal={newKcal} unit={newUnit} canEdit={false} />
         <FoodItemUnit
           canEditUnit={false}

@@ -1,7 +1,7 @@
 import { useGetAllFoodItemsQuery } from "../../app/apiSlice";
-import { SelectFoodItem } from "./SelectFoodItem";
+import { SelectFoodItem } from "../common/SelectFoodItem";
 
-export const MealForm = (updateNewItem: any, newMeal: any) => {
+export const AddMealForm = (updateNewItem: any, newMeal: any) => {
   const {
     data: foodItems,
     isLoading,

@@ -16,7 +16,7 @@ export const Toast = ({
           backgroundColor: success ? "#00800040" : "pink",
           borderRadius: "0.3rem",
           display: visible ? "flex" : "none",
-          height: visible ? "2rem" : "0px",
+          visibility: visible ? "visible" : "hidden",
           alignItems: "center",
           justifyContent: "space-between",
         }}
