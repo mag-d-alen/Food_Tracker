@@ -1,16 +1,20 @@
 export const EditableItemName = ({
   name,
   setNewName,
+  withLabel = true,
 }: {
   name: string;
   setNewName: (name: string) => void;
+  withLabel: boolean;
 }) => {
   const getPlaceholder = () => (name ? name : "food name");
   return (
     <>
-      <label style={{ color: "#7a9f83db" }} htmlFor="calories">
-        name
-      </label>
+      {withLabel && (
+        <label style={{ color: "#7a9f83db" }} htmlFor="calories">
+          name
+        </label>
+      )}
       <input
         placeholder={getPlaceholder()}
         name="name"

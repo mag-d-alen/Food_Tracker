@@ -6,11 +6,13 @@ import { DELAY } from "../../app/constants";
 
 export const AddFoodItemModal = ({
   closeAddFoodItem,
+  name = "",
 }: {
   closeAddFoodItem: () => void;
+  name: string;
 }) => {
   const [newFoodItem, setNewFoodItem] = useState({
-    name: "",
+    name: name,
     kcal: undefined,
     unit: "",
   });

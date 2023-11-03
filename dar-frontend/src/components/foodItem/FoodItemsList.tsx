@@ -1,7 +1,10 @@
 import { JSX } from "react/jsx-runtime";
 import { SingleFoodItemType } from "../../types";
-import { FoodItemCard } from "./FoodItemCard";
-import { useGetAllFoodItemsQuery } from "../../app/apiSlice";
+import { FoodItemCard } from "../common/food_item_card/FoodItemCard";
+import {
+  useDeleteFoodItemMutation,
+  useGetAllFoodItemsQuery,
+} from "../../app/apiSlice";
 import { useState } from "react";
 import { AddFoodItemModal } from "./AddFoodItemModal";
 import { LoadingToasts } from "../LoadingToasts";
@@ -14,6 +17,7 @@ export const FoodItemsList = () => {
   } = useGetAllFoodItemsQuery({ refetchOnMountOrArgChange: true });
   const [addItemVisible, setAddItemVisible] = useState(false);
   const toggleAddItemForm = () => setAddItemVisible(!addItemVisible);
+  const [deleteFoodItem] = useDeleteFoodItemMutation();
 
   return (
     <div className="col">
@@ -23,7 +27,7 @@ export const FoodItemsList = () => {
         isSuccess={false}
       />
       {addItemVisible ? (
-        <AddFoodItemModal closeAddFoodItem={toggleAddItemForm} />
+        <AddFoodItemModal closeAddFoodItem={toggleAddItemForm} name={""} />
       ) : null}
       {foodItems ? (
         <>
@@ -33,7 +37,11 @@ export const FoodItemsList = () => {
             <div className="list-scroll">
               {foodItems.map(
                 (item: JSX.IntrinsicAttributes & SingleFoodItemType) => (
-                  <FoodItemCard item={item} key={JSON.stringify(item)} />
+                  <FoodItemCard
+                    item={item}
+                    key={JSON.stringify(item)}
+                    deleteFoodItem={deleteFoodItem}
+                  />
                 )
               )}
             </div>

@@ -1,8 +1,6 @@
-import { useGetAllFoodItemsQuery } from "../../app/apiSlice";
-import { EditableItemName } from "../common/EditableItemName";
+import { EditableItemName } from "../common/food_item_card/EditableItemName";
 import { FoodItemUnit } from "./FoodItemUnit";
-import { FoodItemCalories } from "./FoodItemsCalories";
-import { LoadingToasts } from "../LoadingToasts";
+import { FoodItemCalories } from "../common/food_item_card/FoodItemsCalories";
 
 export const FoodItemCardForm = ({
   newName,

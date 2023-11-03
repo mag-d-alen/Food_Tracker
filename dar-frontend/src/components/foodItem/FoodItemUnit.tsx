@@ -1,4 +1,6 @@
+import { OptionType, OptionsType } from "../../types";
 import { convertUnit } from "../../utils/unitMeasuresConvertor";
+import { CustomSelect } from "../common/CustomSelect";
 
 export const FoodItemUnit = ({
   unit,
@@ -12,44 +14,52 @@ export const FoodItemUnit = ({
   qty?: number;
   setNewQty?: (qty: string) => void;
   canEditUnit?: boolean;
-}) => (
-  <div
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      padding: "1rem",
-      flexWrap: "wrap",
-      justifyContent: "center",
-      // backgroundColor: "#7a9f8378",
-      borderRadius: "0.3rem",
-      color: "#7a9f83f0",
-    }}
-  >
-    <span>{canEditUnit ? "default unit" : "default meal size"}</span>
-    {!canEditUnit ? (
-      <input
-        type="number"
-        name="qty"
-        placeholder="default quantity"
-        onChange={(e) => setNewQty(e.target.value)}
-        value={qty}
-      ></input>
-    ) : (
-      <>
-        <select
-          name="unit"
-          value={unit}
-          onChange={(e) => setNewUnit(e.target.value)}
-        >
-          <option value="">--choose option--</option>
-          <option value="PC">1 piece</option>
-          <option value="GR">100 gram</option>
-          <option value="ML"> 100 ml</option>
-          <option value="C">1 cup</option>
-        </select>
-        <div> * {convertUnit(unit)}</div>
-      </>
-    )}
-  </div>
-);
+}) => {
+  const options: OptionsType = [
+    { label: "1 piece", value: "PC" },
+    {
+      value: "GR",
+      label: "100 gram",
+    },
+    { value: "ML", label: "100 ml" },
+    { value: "C", label: "1 cup" },
+  ];
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: "1rem",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        // backgroundColor: "#7a9f8378",
+        borderRadius: "0.3rem",
+        color: "#7a9f83f0",
+      }}
+    >
+      <span>{canEditUnit ? "default unit" : "default meal size"}</span>
+      {!canEditUnit ? (
+        <input
+          type="number"
+          name="qty"
+          placeholder="default quantity"
+          onChange={(e) => setNewQty(e.target.value)}
+          value={qty}
+        ></input>
+      ) : (
+        <>
+          <CustomSelect
+            options={options}
+            handleChange={function (option: OptionType): void {
+              setNewUnit(option.value);
+            }}
+          />
+
+          <div> * {convertUnit(unit)}</div>
+        </>
+      )}
+    </div>
+  );
+};

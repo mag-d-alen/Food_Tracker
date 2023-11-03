@@ -26,22 +26,15 @@ export const MealsPage = () => {
         </>
       ) : null}
       <div className="list-container">
-        <button style={{ height: "5rem" }} onClick={toggleAddMealForm}>
-          Add a meal
-        </button>
+        {!addMealVisible ? (
+          <button style={{ height: "5rem" }} onClick={toggleAddMealForm}>
+            Add a meal
+          </button>
+        ) : null}
         {addMealVisible ? (
           <AddMealModal closeAddMeal={toggleAddMealForm} />
         ) : meals ? (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              height: "70vh",
-              overflowY: "auto",
-              borderRadius: "0.3rem",
-              flex: "1",
-            }}
-          >
+          <div className="meals--container">
             {meals.map((item: JSX.IntrinsicAttributes & FoodItemType) => (
               <MealCardWrapper key={item.id} {...item} />
             ))}

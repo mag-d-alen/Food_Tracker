@@ -1,11 +1,10 @@
-import { EditableItemName } from "../common/EditableItemName";
 import moment from "moment";
 import { MealCardDate } from "./MealCardDate";
 import { MealCardFoodItemCard } from "./MealCardFoodItemCard";
+import { EditableItemName } from "../common/food_item_card/EditableItemName";
 
 export const MealCard = ({
   isEditing,
-  newMealName,
   setNewMealName,
   setIsEditing,
   newFoodItems,
@@ -18,7 +17,6 @@ export const MealCard = ({
   mealName,
 }: {
   isEditing: boolean;
-  newMealName: string;
   setNewMealName: (val: string) => void;
   setIsEditing: (val: boolean) => void;
   mealName: string;
@@ -33,28 +31,21 @@ export const MealCard = ({
   created_at: string;
 }): JSX.Element => {
   return (
-    <div
-      style={{
-        padding: "1rem",
-        border: "1px solid lightgray",
-        borderRadius: "0.3rem",
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "lavender",
-        color: "black",
-        margin: "0.5rem 0 1rem 0",
-      }}
-    >
-      {isEditing ? (
-        <EditableItemName name={newMealName} setNewName={setNewMealName} />
-      ) : (
-        <div
-          style={{ fontSize: "2rem", padding: "0.5rem 0 0 0" }}
-          onClick={() => setIsEditing(true)}
-        >
-          {mealName.toUpperCase()}
-        </div>
-      )}
+    <div className="meals__meal-card">
+      <div
+        style={{ fontSize: "2rem", padding: "0.5rem 0 0 0" }}
+        onClick={() => setIsEditing(true)}
+      >
+        {isEditing || !mealName.length ? (
+          <EditableItemName
+            withLabel={false}
+            name={mealName}
+            setNewName={setNewMealName}
+          />
+        ) : (
+          <span>{mealName.toUpperCase()}</span>
+        )}
+      </div>
 
       <MealCardDate detail={moment(created_at).format("DD.MM.YYYY HH:mm")} />
 
@@ -73,10 +64,9 @@ export const MealCard = ({
         <div>No food recorded</div>
       )}
 
-      {newFoodItem.name.length || newMealName.length ? (
+      {newFoodItem.name.length ? (
         <button onClick={addMeal}>save changes</button>
       ) : null}
-
       <button onClick={() => setAddItemVisible(true)}>Add new Item</button>
     </div>
   );

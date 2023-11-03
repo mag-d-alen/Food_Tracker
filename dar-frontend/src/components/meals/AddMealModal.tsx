@@ -1,28 +1,43 @@
 import { useState } from "react";
-import { useAddMealMutation } from "../../app/apiSlice";
-import { AddMealForm } from "./AddMealForm";
-import { SingleFoodItemType } from "../../types";
+import {
+  useAddMealMutation,
+  useGetAllFoodItemsQuery,
+} from "../../app/apiSlice";
 import { LoadingToasts } from "../LoadingToasts";
+import { SelectFoodItem } from "../common/SelectFoodItem";
+import { FoodItemCard } from "../common/food_item_card/FoodItemCard";
+import { AddFoodItemModal } from "../foodItem/AddFoodItemModal";
+import { FoodItemInputType, FoodItemType } from "../../types";
+import { MealCardFoodItemCard } from "./MealCardFoodItemCard";
+import { MealCardWrapper } from "./MealCardWrapper";
 
 export const AddMealModal = ({
   closeAddMeal,
 }: {
   closeAddMeal: () => void;
 }) => {
-  const [newMeal, setNewMeal] = useState({
+  const [newMeal, setNewMeal] = useState<{
+    name: string;
+    foodItems: FoodItemType[];
+  }>({
     name: "",
-    food_items: [{ name: "" }],
+    foodItems: [],
   });
-  const [addMeal, { isError, isSuccess, isLoading }] = useAddMealMutation();
+
+  const [addMeal] = useAddMealMutation();
+  const { data: foodItems } = useGetAllFoodItemsQuery({
+    refetchOnMountOrArgChange: true,
+  });
 
   const updateMealName = (name: string) => {
-    setNewMeal({ name: name, food_items: [...newMeal.food_items] });
+    setNewMeal({ name: name, foodItems: [...newMeal.foodItems] });
   };
-  const updateMealFood = (foodItem: SingleFoodItemType) => {
-    const updatedFoodItems = newMeal.food_items[0]
-      ? [...newMeal.food_items, foodItem]
-      : [foodItem];
-    setNewMeal({ name: newMeal.name, food_items: updatedFoodItems });
+
+  const updateMealFood = (foodItem: string) => {
+    const updatedFoodItems = newMeal.foodItems.length
+      ? [...newMeal.foodItems, JSON.parse(foodItem[0])]
+      : [JSON.parse(foodItem)];
+    setNewMeal({ name: newMeal.name, foodItems: updatedFoodItems });
   };
 
   const addItem = () => addMeal(newMeal);
@@ -30,14 +45,23 @@ export const AddMealModal = ({
   return (
     <div>
       <h2>Add New Item to the food items library</h2>
-      {!isError && !isLoading && !isSuccess ? (
+      <MealCardWrapper />
+      {/* {!isError && !isLoading && !isSuccess ? (
         <>
           <div>
             Meal's name:
             <input onChange={(e) => updateMealName(e.target.value)}></input>
           </div>
-          <AddMealForm updateNewItem={updateMealFood} newMeal={newMeal} />
-          {newMeal.food_items[0].name ? (
+
+          {foodItems ? (
+            <SelectFoodItem foodItems={foodItems} setNewItem={updateMealFood} />
+          ) : null}
+
+          {newMeal.foodItems.length
+            ? newMeal.foodItems.map((item) => item.food_item.unit)
+            : null}
+
+          {newMeal.foodItems.length ? (
             <button onClick={addItem}>Save meal info</button>
           ) : null}
           <button onClick={closeAddMeal}>Back</button>
@@ -48,7 +72,7 @@ export const AddMealModal = ({
           isError={isError}
           isSuccess={isSuccess}
         />
-      )}
+      )} */}
     </div>
   );
 };

@@ -31,11 +31,22 @@ export const MealCardWrapper = (item: any): JSX.Element => {
     qty: "",
     totalKcal: undefined,
   };
+  const initialNewMealState = {
+    id: Math.random().toFixed(2),
+    name: "",
+    created_at: "",
+    user: "",
+    food_items: [],
+    total_meal_kcal: 0,
+  };
+  const [newMeal, setNewMeal] = useState(item || initialNewMealState);
   const [newFoodItem, setNewFoodItem] = useState(initialNewItemState);
+
   const [setChanges, { isSuccess, isError, isLoading }] =
     useUpdateMealMutation();
 
   const updateNewItem = (item: any) => {
+    console.log(item);
     let updatedItem: any = {};
     for (let [key, value] of Object.entries(item)) updatedItem[key] = value;
     setNewFoodItems([newFoodItems, updateNewItem]);
@@ -54,6 +65,11 @@ export const MealCardWrapper = (item: any): JSX.Element => {
     setNewFoodItems([...newFoodItems, newItem]);
     setAddItemVisible(false);
   };
+  const updateMealName = (value: string) =>
+    setNewMeal({
+      name: value,
+      food_items: [...newMeal.food_items],
+    });
 
   const deleteFoodItem = (id: number) => {
     const updatedFoodItems = newFoodItems.filter(
@@ -75,9 +91,10 @@ export const MealCardWrapper = (item: any): JSX.Element => {
     };
     setChanges(updatedMeal);
     setIsEditing(false);
+    newFoodItems(initialNewMealState.food_items);
     setNewFoodItem(initialNewItemState);
-    setNewMealName("");
   };
+
   return (
     <>
       <LoadingToasts
@@ -87,10 +104,9 @@ export const MealCardWrapper = (item: any): JSX.Element => {
       />
       <MealCard
         isEditing={isEditing}
-        newMealName={newMealName}
-        setNewMealName={setNewMealName}
+        setNewMealName={updateMealName}
         setIsEditing={setIsEditing}
-        mealName={mealName}
+        mealName={newMeal.name}
         newFoodItems={newFoodItems}
         deleteFoodItem={deleteFoodItem}
         newFoodItem={newFoodItem}

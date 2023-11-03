@@ -222,3 +222,23 @@ li {
 .food-items__modal--button {
     margin: -2rem -2rem auto auto;
 }
+
+.meals__meal-card {
+    padding: 1rem;
+    border: 1px solid lightgray;
+    border-radius: 0.3rem;
+    display: flex;
+    flex-direction: column;
+    background-color: lavender;
+    color: black;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.meals--container {
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+    overflow-y: auto;
+    border-radius: 0.3rem;
+    flex: 1;
+}

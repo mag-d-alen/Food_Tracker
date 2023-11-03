@@ -11,11 +11,13 @@ export type SingleFoodItemType = {
   unit: string;
 };
 export type FoodItemInputType = {
+  id?: number;
   name: string;
   kcal: number;
   unit: string;
-  qty: string | number;
-  total_kcal: number;
+  qty?: string | number;
+  total_kcal?: number;
+  food_item?: SingleFoodItemType;
 };
 export type FoodItemsApiResponse = FoodItemType[];
 export type MealType = {
@@ -32,3 +34,5 @@ export type UnitChoicesType = {
   ML: string;
   C: string;
 };
+export type OptionType = { label: string; value: string };
+export type OptionsType = OptionType[];

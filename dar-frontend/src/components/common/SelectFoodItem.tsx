@@ -1,4 +1,5 @@
-import { SingleFoodItemType } from "../../types";
+import { OptionType, SingleFoodItemType } from "../../types";
+import { CustomSelect } from "./CustomSelect";
 
 export const SelectFoodItem = ({
   foodItems,
@@ -7,17 +8,11 @@ export const SelectFoodItem = ({
   foodItems: SingleFoodItemType[];
   setNewItem: (item: string) => void;
 }) => {
-  const handleSelect = (e: any) => {
-    setNewItem(JSON.parse(e.target.value));
+  const handleSelect = (option: OptionType) => {
+    setNewItem(option.value);
   };
-  return (
-    <select onChange={handleSelect}>
-      <option value="">--choose item--</option>
-      {foodItems.map((item: SingleFoodItemType) => (
-        <option key={item.id} value={JSON.stringify(item)}>
-          {item.name}
-        </option>
-      ))}
-    </select>
-  );
+  const options = foodItems.map((item: SingleFoodItemType) => {
+    return { value: JSON.stringify(item), label: item.name };
+  });
+  return <CustomSelect options={options} handleChange={handleSelect} />;
 };

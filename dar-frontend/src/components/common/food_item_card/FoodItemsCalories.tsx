@@ -1,4 +1,4 @@
-import { convertUnit } from "../../utils/unitMeasuresConvertor";
+import { convertUnit } from "../../../utils/unitMeasuresConvertor";
 
 export const FoodItemCalories = ({
   kcal,

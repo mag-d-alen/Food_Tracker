@@ -1,5 +1,5 @@
 import { useGetAllFoodItemsQuery } from "../../app/apiSlice";
-import { FoodItemCalories } from "../foodItem/FoodItemsCalories";
+import { FoodItemCalories } from "../common/food_item_card/FoodItemsCalories";
 import { FoodItemUnit } from "../foodItem/FoodItemUnit";
 import { LoadingToasts } from "../LoadingToasts";
 
