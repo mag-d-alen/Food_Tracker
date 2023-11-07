@@ -8,7 +8,7 @@ import { TotalDailyKcal } from "../TotalDailyKcal";
 import { LoadingToasts } from "../LoadingToasts";
 import { MealCardWrapper } from "./MealCardWrapper";
 
-export const MealsPage = () => {
+export const MealsList = () => {
   const { data: meals, isLoading } = useGetAllMealsQuery({
     refetchOnMountOrArgChange: true,
   });
@@ -19,31 +19,24 @@ export const MealsPage = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <LoadingToasts isLoading={isLoading} isError={false} isSuccess={false} />
+
       {!addMealVisible && meals ? (
         <>
           <h2>Meals {moment().format("DD.MM.YYYY")}</h2>
           <TotalDailyKcal allMeals={meals} />
         </>
       ) : null}
+
       <div className="list-container">
-        <button style={{ height: "5rem" }} onClick={toggleAddMealForm}>
-          Add a meal
-        </button>
+        {!addMealVisible && (
+          <button onClick={toggleAddMealForm}>Add a meal</button>
+        )}
         {addMealVisible ? (
           <AddMealModal closeAddMeal={toggleAddMealForm} />
         ) : meals ? (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              height: "70vh",
-              overflowY: "auto",
-              borderRadius: "0.3rem",
-              flex: "1",
-            }}
-          >
+          <div className="meals-list">
             {meals.map((item: JSX.IntrinsicAttributes & FoodItemType) => (
-              <MealCardWrapper key={item.id} {...item} />
+              <MealCardWrapper item={item} key={item.id} />
             ))}
           </div>
         ) : (

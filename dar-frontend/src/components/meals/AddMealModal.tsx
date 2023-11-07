@@ -1,54 +1,74 @@
 import { useState } from "react";
 import { useAddMealMutation } from "../../app/apiSlice";
-import { AddMealForm } from "./AddMealForm";
-import { SingleFoodItemType } from "../../types";
-import { LoadingToasts } from "../LoadingToasts";
+import { FoodItemType } from "../../types";
+import { EditableItemName } from "../common/EditableItemName";
+import { MealCardWrapper } from "./MealCardWrapper";
+
+export type newMealType = {
+  name: string;
+  food_items: FoodItemType[] | [];
+  user: number;
+  quantity: number;
+};
 
 export const AddMealModal = ({
   closeAddMeal,
 }: {
   closeAddMeal: () => void;
 }) => {
-  const [newMeal, setNewMeal] = useState({
+  const [createMeal, { data }] = useAddMealMutation();
+  const [isAddingFoodItems, setIsAddingFoodItems] = useState(false);
+
+  const addMeal = () => {
+    createMeal({
+      body: {
+        name: newMeal.name,
+        user: 1,
+      },
+    });
+    setIsAddingFoodItems(true);
+  };
+
+  const [newMeal, setNewMeal] = useState<newMealType>({
     name: "",
-    food_items: [{ name: "" }],
+    food_items: [],
+    user: 1,
+    quantity: 3,
   });
-  const [addMeal, { isError, isSuccess, isLoading }] = useAddMealMutation();
 
-  const updateMealName = (name: string) => {
-    setNewMeal({ name: name, food_items: [...newMeal.food_items] });
+  const updateMealName = (key: string, val: string) => {
+    setNewMeal({
+      ...newMeal,
+      name: val,
+    });
   };
-  const updateMealFood = (foodItem: SingleFoodItemType) => {
-    const updatedFoodItems = newMeal.food_items[0]
-      ? [...newMeal.food_items, foodItem]
-      : [foodItem];
-    setNewMeal({ name: newMeal.name, food_items: updatedFoodItems });
-  };
-
-  const addItem = () => addMeal(newMeal);
 
   return (
-    <div>
-      <h2>Add New Item to the food items library</h2>
-      {!isError && !isLoading && !isSuccess ? (
-        <>
-          <div>
-            Meal's name:
-            <input onChange={(e) => updateMealName(e.target.value)}></input>
-          </div>
-          <AddMealForm updateNewItem={updateMealFood} newMeal={newMeal} />
-          {newMeal.food_items[0].name ? (
-            <button onClick={addItem}>Save meal info</button>
+    <div className="modal--backdrop">
+      <div className="modal--container">
+        <button className="button-close" onClick={closeAddMeal}>
+          x
+        </button>
+
+        <div className="meal-card--container">
+          {!isAddingFoodItems ? (
+            <>
+              <EditableItemName
+                withLabel={false}
+                name={newMeal.name}
+                setNewName={updateMealName}
+                placeholder="meal name"
+              />
+              <button onClick={addMeal}>save</button>
+            </>
           ) : null}
-          <button onClick={closeAddMeal}>Back</button>
-        </>
-      ) : (
-        <LoadingToasts
-          isLoading={isLoading}
-          isError={isError}
-          isSuccess={isSuccess}
-        />
-      )}
+          {data ? <MealCardWrapper item={data} existingMeal={false} /> : null}
+
+          {newMeal.food_items[0] ? (
+            <button onClick={addMeal}>Save meal info</button>
+          ) : null}
+        </div>
+      </div>
     </div>
   );
 };

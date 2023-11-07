@@ -36,14 +36,7 @@ export const MealCardFoodItemCard = ({
         <h3>total calories: {item.total_kcal}</h3>
       </div>
       <button
-        style={{
-          width: "1.5rem",
-          height: "1.2rem",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "1.2rem",
-        }}
+        className="button-close"
         onClick={() => {
           deleteFoodItem(item.id!);
         }}

@@ -5,7 +5,7 @@ import { MealType, SingleFoodItemType } from "../types";
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api" }),
-  tagTypes: ["FoodItem", "Meal", "User", "Meals"],
+  tagTypes: ["FoodItem", "Meal", "User"],
   endpoints: (builder) => ({
     getAllFoodItems: builder.query({
       query: () => `/fooditems`,
@@ -49,7 +49,7 @@ export const apiSlice = createApi({
 
     getAllMeals: builder.query({
       query: () => `/meals`,
-      providesTags: ["Meals"],
+      providesTags: ["Meal"],
     }),
 
     getMeal: builder.query<MealType, number>({
@@ -63,7 +63,7 @@ export const apiSlice = createApi({
         method: "PUT",
         body: body,
       }),
-      invalidatesTags: ["Meal", "Meals"],
+      invalidatesTags: ["Meal"],
     }),
 
     addMeal: builder.mutation<void, any>({

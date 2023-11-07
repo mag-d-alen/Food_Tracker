@@ -21,9 +21,9 @@ export type FoodItemsApiResponse = FoodItemType[];
 export type MealType = {
   id: number;
   name: string;
-  user: string;
+  user: number;
   created_at: string;
-  food_items: SingleFoodItemType[];
+  food_items: FoodItemType[] | [];
 };
 export type UnitChoicesType = {
   GR: string;

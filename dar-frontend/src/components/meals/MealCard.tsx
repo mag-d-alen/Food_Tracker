@@ -33,18 +33,7 @@ export const MealCard = ({
   created_at: string;
 }): JSX.Element => {
   return (
-    <div
-      style={{
-        padding: "1rem",
-        border: "1px solid lightgray",
-        borderRadius: "0.3rem",
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "lavender",
-        color: "black",
-        margin: "0.5rem 0 1rem 0",
-      }}
-    >
+    <div className="meal-card--container">
       {isEditing ? (
         <EditableItemName name={newMealName} setNewName={setNewMealName} />
       ) : (

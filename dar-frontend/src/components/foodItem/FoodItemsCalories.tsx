@@ -8,7 +8,7 @@ export const FoodItemCalories = ({
 }: {
   kcal?: number;
   unit: string;
-  setNewKcal?: (val: any) => void;
+  setNewKcal?: (field: string, value: any) => void;
   canEdit?: boolean;
 }) => {
   return (
@@ -21,7 +21,7 @@ export const FoodItemCalories = ({
           placeholder="default calories"
           name="calories"
           type="number"
-          onChange={(e) => setNewKcal(Number(e.target.value))}
+          onChange={(e) => setNewKcal("kcal", Number(e.target.value))}
           value={kcal}
         ></input>
       ) : (

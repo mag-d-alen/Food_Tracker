@@ -5,7 +5,7 @@ export const SelectFoodItem = ({
   setNewItem,
 }: {
   foodItems: SingleFoodItemType[];
-  setNewItem: (item: string) => void;
+  setNewItem: (item: SingleFoodItemType) => void;
 }) => {
   const handleSelect = (e: any) => {
     setNewItem(JSON.parse(e.target.value));
