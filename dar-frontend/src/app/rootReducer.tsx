@@ -1,11 +1,34 @@
-// import { combineReducers } from "@reduxjs/toolkit";
-// import { useDispatch } from "react-redux";
-// import { store } from "./store";
+export const foodItemInitialState = {
+  name: "",
+  kcal: 0,
+  unit: "",
+  id: 0,
+};
 
-// const rootReducer = combineReducers({
-//     foodItems: foodItemsSlice.reducer
-// });
-
-// export type RootState = ReturnType<typeof rootReducer>;
-// export type AppDispatch = typeof store.dispatch;
-// export const useAppDispatch: () => AppDispatch = useDispatch; 
+export const foodItemReducer = (
+  state = foodItemInitialState,
+  action: { type: string; payload: any }
+) => {
+  switch (action.type) {
+    case "set-name": {
+      return {
+        ...state,
+        name: action.payload,
+      };
+    }
+    case "set_kcal": {
+      return { ...state, kcal: action.payload };
+    }
+    case "set_unit": {
+      return { ...state, unit: action.payload };
+    }
+    case "set_id":
+      {
+        return {
+          ...state,
+          id: action.payload,
+        };
+      }
+      throw Error("Unknown action: " + action.type);
+  }
+};

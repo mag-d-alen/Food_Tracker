@@ -1,54 +1,46 @@
-import { useState } from "react";
 import { useAddMealMutation } from "../../app/apiSlice";
-import { AddMealForm } from "./AddMealForm";
-import { SingleFoodItemType } from "../../types";
+import { FoodItemType } from "../../types";
 import { LoadingToasts } from "../LoadingToasts";
+import { NameInput } from "../atoms/NameInput";
+
+export type newMealType = {
+  name: string;
+  food_items: FoodItemType[] | [];
+  user: number;
+  quantity: number;
+};
 
 export const AddMealModal = ({
   closeAddMeal,
 }: {
   closeAddMeal: () => void;
 }) => {
-  const [newMeal, setNewMeal] = useState({
-    name: "",
-    food_items: [{ name: "" }],
-  });
-  const [addMeal, { isError, isSuccess, isLoading }] = useAddMealMutation();
-
-  const updateMealName = (name: string) => {
-    setNewMeal({ name: name, food_items: [...newMeal.food_items] });
+  const [createMeal, { isLoading, isError }] = useAddMealMutation();
+  const addMeal = (key: string, val: string) => {
+    createMeal({
+      name: val,
+      user: 1,
+    });
+    closeAddMeal();
   };
-  const updateMealFood = (foodItem: SingleFoodItemType) => {
-    const updatedFoodItems = newMeal.food_items[0]
-      ? [...newMeal.food_items, foodItem]
-      : [foodItem];
-    setNewMeal({ name: newMeal.name, food_items: updatedFoodItems });
-  };
-
-  const addItem = () => addMeal(newMeal);
 
   return (
-    <div>
-      <h2>Add New Item to the food items library</h2>
-      {!isError && !isLoading && !isSuccess ? (
-        <>
-          <div>
-            Meal's name:
-            <input onChange={(e) => updateMealName(e.target.value)}></input>
-          </div>
-          <AddMealForm updateNewItem={updateMealFood} newMeal={newMeal} />
-          {newMeal.food_items[0].name ? (
-            <button onClick={addItem}>Save meal info</button>
-          ) : null}
-          <button onClick={closeAddMeal}>Back</button>
-        </>
-      ) : (
-        <LoadingToasts
-          isLoading={isLoading}
-          isError={isError}
-          isSuccess={isSuccess}
-        />
-      )}
+    <div className="modal--backdrop">
+      <div className="modal--container">
+        <button className="button-close" onClick={closeAddMeal}>
+          x
+        </button>
+        <div className="meal-card--container">
+          <LoadingToasts isLoading={isLoading} isError={isError} />
+          <NameInput
+            withLabel={false}
+            placeholder="meal name"
+            changeHandler={addMeal}
+            asInput={true}
+          />
+          {/* {mealName ? <button onClick={addMeal}>save</button> : null} */}
+        </div>
+      </div>
     </div>
   );
 };

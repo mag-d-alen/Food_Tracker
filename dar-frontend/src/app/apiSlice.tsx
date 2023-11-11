@@ -5,7 +5,7 @@ import { MealType, SingleFoodItemType } from "../types";
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api" }),
-  tagTypes: ["FoodItem", "Meal", "User", "Meals"],
+  tagTypes: ["FoodItem", "Meal", "User"],
   endpoints: (builder) => ({
     getAllFoodItems: builder.query({
       query: () => `/fooditems`,
@@ -20,18 +20,18 @@ export const apiSlice = createApi({
       SingleFoodItemType,
       Partial<SingleFoodItemType>
     >({
-      query: (data) => ({
-        url: `/fooditems/${data.id}/`,
+      query: (body) => ({
+        url: `/fooditems/${body.id}/`,
         method: "PATCH",
         // fetchBaseQuery automatically adds `content-type: application/json` to
         // the Headers and calls `JSON.stringify(patch)`
-        body: { ...data },
+        body: body,
       }),
       invalidatesTags: ["FoodItem"],
     }),
 
     addFoodItem: builder.mutation<void, any>({
-      query: ({ body }: { body: SingleFoodItemType }) => ({
+      query: (body) => ({
         url: "/fooditems/",
         method: "POST",
         body: body,
@@ -47,9 +47,9 @@ export const apiSlice = createApi({
       invalidatesTags: ["FoodItem"],
     }),
 
-    getAllMeals: builder.query({
+    getAllMeals: builder.query<MealType[], any>({
       query: () => `/meals`,
-      providesTags: ["Meals"],
+      providesTags: ["Meal"],
     }),
 
     getMeal: builder.query<MealType, number>({
@@ -63,11 +63,11 @@ export const apiSlice = createApi({
         method: "PUT",
         body: body,
       }),
-      invalidatesTags: ["Meal", "Meals"],
+      invalidatesTags: ["Meal"],
     }),
 
     addMeal: builder.mutation<void, any>({
-      query: ({ body }: { body: MealType }) => ({
+      query: (body: MealType) => ({
         url: "/meals/",
         method: "POST",
         body: body,
@@ -101,6 +101,7 @@ export const {
   useDeleteFoodItemMutation,
   useAddMealMutation,
   useGetAllMealsQuery,
+  useGetMealQuery,
   useUpdateMealMutation,
   useDeleteMealMutation,
   useLoginUserMutation,

@@ -7,7 +7,7 @@ export type FoodItemType = {
 export type SingleFoodItemType = {
   id?: number;
   name: string;
-  kcal: number;
+  kcal: number | undefined;
   unit: string;
 };
 export type FoodItemInputType = {
@@ -21,9 +21,10 @@ export type FoodItemsApiResponse = FoodItemType[];
 export type MealType = {
   id: number;
   name: string;
-  user: string;
+  user: number;
   created_at: string;
-  food_items: SingleFoodItemType[];
+  food_items: FoodItemType[] | [];
+  total_meal_kcal: number;
 };
 export type UnitChoicesType = {
   GR: string;

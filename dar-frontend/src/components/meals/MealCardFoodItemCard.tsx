@@ -1,13 +1,22 @@
-import { FoodItemType } from "../../types";
+import { FoodItemType, MealType } from "../../types";
 import { convertUnit } from "../../utils/unitMeasuresConvertor";
+import { useUpdateMealMutation } from "../../app/apiSlice";
 
 export const MealCardFoodItemCard = ({
   item,
-  deleteFoodItem,
+  meal,
 }: {
   item: FoodItemType;
-  deleteFoodItem: (id: number) => void;
+  meal: MealType;
 }) => {
+  const [saveChanges] = useUpdateMealMutation();
+  const deleteFoodItem = (id: number) => {
+    const updatedFoodItems = meal.food_items.filter(
+      (item: any) => item.id != id
+    );
+    saveChanges({ ...meal, food_items: updatedFoodItems });
+  };
+
   return (
     <div
       key={item.id}
@@ -36,14 +45,7 @@ export const MealCardFoodItemCard = ({
         <h3>total calories: {item.total_kcal}</h3>
       </div>
       <button
-        style={{
-          width: "1.5rem",
-          height: "1.2rem",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "1.2rem",
-        }}
+        className="button-close"
         onClick={() => {
           deleteFoodItem(item.id!);
         }}

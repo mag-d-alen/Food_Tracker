@@ -1,8 +1,8 @@
 import { SingleFoodItemType } from "../../types";
-import { useDeleteFoodItemMutation } from "../../app/apiSlice";
 import { useState } from "react";
-import { EditFoodItemModal } from "./EditFoodItemModal";
+import { FoodItemModal } from "./FoodItemModal";
 import { convertUnit } from "../../utils/unitMeasuresConvertor";
+import { useDeleteFoodItemMutation } from "../../app/apiSlice";
 
 export const FoodItemCard = ({
   item,
@@ -10,9 +10,13 @@ export const FoodItemCard = ({
   item: SingleFoodItemType;
 }): JSX.Element => {
   const { id, name, kcal, unit } = { ...item };
-  const [deleteFoodItem] = useDeleteFoodItemMutation();
   const [isEditing, setIsEditing] = useState(false);
+  const [deleteFoodItem] = useDeleteFoodItemMutation();
   const toggleEditable = () => setIsEditing(true);
+  const clickHandler = () => {
+    if (!id) return;
+    deleteFoodItem(id!);
+  };
 
   return (
     <div className="food-items__card">
@@ -21,9 +25,9 @@ export const FoodItemCard = ({
         {kcal} kcal per {convertUnit(unit)}
       </h4>
       {isEditing ? (
-        <EditFoodItemModal item={item} closeModal={() => setIsEditing(false)} />
+        <FoodItemModal item={item} closeModal={() => setIsEditing(false)} />
       ) : null}
-      <button onClick={() => deleteFoodItem(id)}>Remove Item</button>
+      <button onClick={clickHandler}>Remove Item</button>
       <button className={isEditing ? "hidden" : ""} onClick={toggleEditable}>
         Edit Item
       </button>

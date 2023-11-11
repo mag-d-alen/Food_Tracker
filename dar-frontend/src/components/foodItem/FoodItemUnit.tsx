@@ -8,9 +8,9 @@ export const FoodItemUnit = ({
   canEditUnit = true,
 }: {
   unit: string;
-  setNewUnit?: (unit: string) => void;
+  setNewUnit?: (field: string, value: any) => void;
   qty?: number;
-  setNewQty?: (qty: string) => void;
+  setNewQty?: (field: string, value: any) => void;
   canEditUnit?: boolean;
 }) => (
   <div
@@ -32,7 +32,7 @@ export const FoodItemUnit = ({
         type="number"
         name="qty"
         placeholder="default quantity"
-        onChange={(e) => setNewQty(e.target.value)}
+        onChange={(e) => setNewQty("qty", e.target.value)}
         value={qty}
       ></input>
     ) : (
@@ -40,7 +40,7 @@ export const FoodItemUnit = ({
         <select
           name="unit"
           value={unit}
-          onChange={(e) => setNewUnit(e.target.value)}
+          onChange={(e) => setNewUnit("unit", e.target.value)}
         >
           <option value="">--choose option--</option>
           <option value="PC">1 piece</option>
