@@ -7,7 +7,7 @@ type PropsType = {
   placeholder?: string;
   changeHandler: (label: string, value: string) => void;
   asInput?: boolean;
-  meal?: boolean;
+  saveOnlyOnEnterKey?: boolean;
 };
 
 export const NameInput = ({
@@ -16,7 +16,7 @@ export const NameInput = ({
   changeHandler,
   name,
   asInput = false,
-  meal = false,
+  saveOnlyOnEnterKey = false,
 }: PropsType) => {
   const [newName, setNewName] = useState("");
   const [isEditing, setIsEditing] = useState(asInput);
@@ -30,7 +30,7 @@ export const NameInput = ({
   const saveChange = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") changeSubmit();
     else {
-      !meal ? debouncedChangeSubmit() : () => {};
+      !saveOnlyOnEnterKey ? debouncedChangeSubmit() : () => {};
     }
   };
 

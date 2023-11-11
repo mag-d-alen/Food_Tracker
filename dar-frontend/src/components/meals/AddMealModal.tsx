@@ -37,7 +37,7 @@ export const AddMealModal = ({
             placeholder="meal name"
             changeHandler={addMeal}
             asInput={true}
-            meal={true}
+            saveOnlyOnEnterKey={true}
           />
           {/* {mealName ? <button onClick={addMeal}>save</button> : null} */}
         </div>
