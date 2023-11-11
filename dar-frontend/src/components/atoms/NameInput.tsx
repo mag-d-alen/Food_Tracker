@@ -7,6 +7,7 @@ type PropsType = {
   placeholder?: string;
   changeHandler: (label: string, value: string) => void;
   asInput?: boolean;
+  meal?: boolean;
 };
 
 export const NameInput = ({
@@ -15,6 +16,7 @@ export const NameInput = ({
   changeHandler,
   name,
   asInput = false,
+  meal = false,
 }: PropsType) => {
   const [newName, setNewName] = useState("");
   const [isEditing, setIsEditing] = useState(asInput);
@@ -26,7 +28,10 @@ export const NameInput = ({
 
   const getPlaceholder = () => (name ? name : placeholder);
   const saveChange = (e: KeyboardEvent<HTMLInputElement>) => {
-    e.key === "Enter" ? changeSubmit() : debouncedChangeSubmit();
+    if (e.key === "Enter") changeSubmit();
+    else {
+      !meal ? debouncedChangeSubmit() : () => {};
+    }
   };
 
   return (

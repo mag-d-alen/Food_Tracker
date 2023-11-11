@@ -23,6 +23,7 @@ export const FoodItemModal = ({
   const [handleFoodItem, { isSuccess, isError, isLoading }] = editItem
     ? useUpdateFoodItemMutation()
     : useAddFoodItemMutation();
+  const [missingValue, setMissingValue] = useState(false);
 
   const [foodItem, setFoodItem] = useState({
     name: name,
@@ -36,23 +37,27 @@ export const FoodItemModal = ({
     });
   };
   const handleSubmit = () => {
+    if (Object.values(foodItem).some((x) => x === "" || x === undefined))
+      return setMissingValue(true);
     const editedItem = { ...foodItem, id: item.id };
+
     editItem ? handleFoodItem(editedItem) : handleFoodItem(foodItem);
     closeModal();
   };
 
   return (
     <div>
-      <LoadingToasts
-        isError={isError}
-        isLoading={isLoading}
-        isSuccess={isSuccess}
-      />
       <div className="modal--backdrop">
         <div className="modal--container">
           <button className="modal--button" onClick={closeModal}>
             x
           </button>
+          <LoadingToasts
+            isError={isError || missingValue}
+            isLoading={isLoading}
+            isSuccess={isSuccess}
+            message={missingValue ? "Please fill all fields" : undefined}
+          />
           <NameInput
             name={foodItem.name || undefined}
             withLabel={true}
