@@ -1,4 +1,4 @@
-import { NameInput } from "../atoms/NameInput";
+import { NameInput } from "../common/NameInput";
 import { useUpdateMealMutation } from "../../app/apiSlice";
 
 import { MealType } from "../../types";

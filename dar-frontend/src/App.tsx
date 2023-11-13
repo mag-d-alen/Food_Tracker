@@ -5,6 +5,7 @@ import { Home } from "./components/Home.tsx";
 import { FoodItemsList } from "./components/foodItem/FoodItemsList.tsx";
 import { Login } from "./components/auth/Login.tsx";
 import { MealsList } from "./components/meals/MealsList.tsx";
+import { Signup } from "./components/auth/Signup.tsx";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/my-meals" element={<MealsList />} />
           <Route path="/food-items" element={<FoodItemsList />} />
         </Routes>

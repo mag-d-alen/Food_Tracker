@@ -1,7 +1,7 @@
 import { useAddMealMutation } from "../../app/apiSlice";
 import { FoodItemType } from "../../types";
 import { LoadingToasts } from "../LoadingToasts";
-import { NameInput } from "../atoms/NameInput";
+import { NameInput } from "../common/NameInput";
 
 export type newMealType = {
   name: string;
@@ -19,7 +19,6 @@ export const AddMealModal = ({
   const addMeal = (key: string, val: string) => {
     createMeal({
       name: val,
-      user: 1,
     });
     closeAddMeal();
   };

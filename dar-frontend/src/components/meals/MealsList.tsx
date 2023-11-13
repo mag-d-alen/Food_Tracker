@@ -12,12 +12,22 @@ import { MealCardFoodItemCard } from "./MealCardFoodItemCard";
 import { EditableMealName } from "./EditableMealName";
 
 export const MealsList = () => {
-  const { data: meals, isLoading } = useGetAllMealsQuery({
+  const { data: allMeals, isLoading } = useGetAllMealsQuery({
     refetchOnMountOrArgChange: true,
   });
 
   const [addMealVisible, setAddMealVisible] = useState(false);
   const toggleAddMealForm = () => setAddMealVisible(!addMealVisible);
+  const [weekDataShown, setWeekDataShown] = useState(false);
+
+  const meals = allMeals?.filter((meal: { created_at: moment.MomentInput }) => {
+    return moment(meal.created_at).isBetween(
+      weekDataShown
+        ? moment().subtract(7, "days")
+        : moment().subtract(24, "hours"),
+      moment()
+    );
+  });
   const todaysDate = moment().format("DD.MM.YYYY");
 
   return (
@@ -27,7 +37,11 @@ export const MealsList = () => {
       {!addMealVisible && meals ? (
         <>
           <h2>Meals {todaysDate} </h2>
-          <TotalDailyKcal allMeals={meals} />
+          <TotalDailyKcal
+            allMeals={meals}
+            toggleWeekData={() => setWeekDataShown(!weekDataShown)}
+            weekDataShown={weekDataShown}
+          />
         </>
       ) : null}
 

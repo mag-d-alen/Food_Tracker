@@ -32,6 +32,14 @@ class Meal(models.Model):
         return self.name
 
     @property
+    def get_user(self):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+            return user
+
+    @property
     def total_meal_kcal(self):
         total_kcal = 0
         for meal_food_item in self.mealfooditem_set.all():
@@ -49,6 +57,4 @@ class MealFoodItem(models.Model):
     def total_kcal(self):
         return self.food_item.kcal * self.qty or self.food_item.kcal
 
-    # def save(self, *args, **kwargs):
-    #     # self.total_kcal = self.food_item.kcal * self.qty
-    #     super(MealFoodItem, self).save(*args, **kwargs)
+

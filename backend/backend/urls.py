@@ -18,7 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from home.views import FoodItemView, MealView, LoginView
+from home.views import FoodItemView, MealView, UserRegisterView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 
 router = routers.DefaultRouter()
 router.register(r'fooditems', FoodItemView, 'fooditem')
@@ -27,6 +29,8 @@ router.register(r'meals', MealView, 'meal')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api/login/', LoginView.as_view(), name='custom-login'),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('register/', UserRegisterView.as_view(), name='auth_register'),
 
 ]

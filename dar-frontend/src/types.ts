@@ -21,7 +21,6 @@ export type FoodItemsApiResponse = FoodItemType[];
 export type MealType = {
   id: number;
   name: string;
-  user: number;
   created_at: string;
   food_items: FoodItemType[] | [];
   total_meal_kcal: number;

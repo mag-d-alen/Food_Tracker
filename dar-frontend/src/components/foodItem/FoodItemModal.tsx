@@ -7,7 +7,7 @@ import { useState } from "react";
 import { LoadingToasts } from "../LoadingToasts";
 import { FoodItemCalories } from "./FoodItemsCalories";
 import { FoodItemUnit } from "./FoodItemUnit";
-import { NameInput } from "../atoms/NameInput";
+import { NameInput } from "../common/NameInput";
 
 export const FoodItemModal = ({
   item = { name: "", kcal: undefined, unit: "" },

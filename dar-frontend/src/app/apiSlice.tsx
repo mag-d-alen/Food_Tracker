@@ -4,8 +4,16 @@ import { MealType, SingleFoodItemType } from "../types";
 
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api" }),
-  tagTypes: ["FoodItem", "Meal", "User"],
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://localhost:8000/api",
+    prepareHeaders: (headers: any) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        headers.set("Authorization", `Bearer ${JSON.parse(token)}`);
+      }
+    },
+  }),
+  tagTypes: ["FoodItem", "Meal"],
   endpoints: (builder) => ({
     getAllFoodItems: builder.query({
       query: () => `/fooditems`,
@@ -53,8 +61,7 @@ export const apiSlice = createApi({
     }),
 
     getMeal: builder.query<MealType, number>({
-      query: (id: number) => `/meals/${id}/`,
-      providesTags: ["Meal"],
+      query: (id: number) => ({ url: `/meals/${id}/`, providesTags: ["Meal"] }),
     }),
 
     updateMeal: builder.mutation<any, any>({
@@ -82,15 +89,6 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Meal"],
     }),
-
-    loginUser: builder.mutation<void, any>({
-      query: (body: { username: string; password: string }) => ({
-        url: "/login/",
-        method: "POST",
-        body: body,
-      }),
-      invalidatesTags: ["User"],
-    }),
   }),
 });
 export const {
@@ -104,5 +102,4 @@ export const {
   useGetMealQuery,
   useUpdateMealMutation,
   useDeleteMealMutation,
-  useLoginUserMutation,
 } = apiSlice;

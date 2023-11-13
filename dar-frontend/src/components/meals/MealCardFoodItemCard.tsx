@@ -37,7 +37,9 @@ export const MealCardFoodItemCard = ({
           padding: " 0.8rem 0 0.3rem 0",
         }}
       >
-        <div>{item.food_item.name}</div>
+        <div>
+          <b>{item.food_item.name.toLocaleUpperCase()}</b>
+        </div>
         <div>calories: {item.food_item.kcal}</div>
         <div>
           quantity: {item.qty} * {convertUnit(item.food_item.unit)}

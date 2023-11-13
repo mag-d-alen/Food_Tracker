@@ -1,44 +1,30 @@
 // LoginForm.js (React component)
-import { useState } from "react";
-import { useLoginUserMutation } from "../../app/apiSlice";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthForm, Input } from "../common/AuthForm";
+import { useLoginUserMutation } from "../../app/authSlice";
+import { extractErrorMessage } from "../../utils/extractErrorMessage";
+import { LoadingToasts } from "../LoadingToasts";
 
 export const Login = () => {
-  const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
-  });
-  const [loginUser, response] = useLoginUserMutation();
+  const [loginUser, { status, data, isError, error }] = useLoginUserMutation();
+  const navigate = useNavigate();
 
-  const handleChange = (e: { target: { name: string; value: string } }) => {
-    const { name, value } = e.target;
-    setCredentials({ ...credentials, [name]: value });
-  };
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    console.log(credentials);
-    loginUser(credentials);
-  };
+  useEffect(() => {
+    if (status != "fulfilled") return;
+    localStorage.setItem("token", JSON.stringify(data.access));
+    navigate("/my-meals");
+  }, [status]);
 
   return (
-    <form
-      style={{ display: "flex", flexDirection: "column" }}
-      onSubmit={handleSubmit}
+    <AuthForm
+      handleDataSubmit={loginUser}
+      navigationlink={"signup"}
+      navigationButtonText={"dont have an account yet? Sign up"}
     >
-      <input
-        type="text"
-        name="username"
-        placeholder="Username"
-        value={credentials.username}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={credentials.password}
-        onChange={handleChange}
-      />
-      <button type="submit">Login</button>
-    </form>
+      <LoadingToasts isError={isError} message={extractErrorMessage(error)} />
+      <Input placeholder="username" name="username" />
+      <Input placeholder="password" name="password" type="password" />
+    </AuthForm>
   );
 };
