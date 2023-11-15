@@ -10,6 +10,7 @@ import { MealCardWrapper } from "./MealCardWrapper";
 import { MealCardDate } from "./MealCardDate";
 import { MealCardFoodItemCard } from "./MealCardFoodItemCard";
 import { EditableMealName } from "./EditableMealName";
+import { GraphsContainer } from "../graphs/GraphsContainer";
 
 export const MealsList = () => {
   const { data: allMeals, isLoading } = useGetAllMealsQuery({
@@ -29,6 +30,7 @@ export const MealsList = () => {
     );
   });
   const todaysDate = moment().format("DD.MM.YYYY");
+  const weekAgo = moment().subtract(7, "days").format("DD.MM.YYYY");
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -36,12 +38,16 @@ export const MealsList = () => {
 
       {!addMealVisible && meals ? (
         <>
-          <h2>Meals {todaysDate} </h2>
+          <h2>
+            Meals {weekDataShown ? `${weekAgo} - ${todaysDate}` : todaysDate}
+          </h2>
           <TotalDailyKcal
             allMeals={meals}
             toggleWeekData={() => setWeekDataShown(!weekDataShown)}
             weekDataShown={weekDataShown}
-          />
+          >
+            <GraphsContainer />
+          </TotalDailyKcal>
         </>
       ) : null}
 

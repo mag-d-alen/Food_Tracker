@@ -22,7 +22,7 @@ export const MealCardFoodItemCard = ({
       key={item.id}
       style={{
         display: "flex",
-        borderBottom: "1px solid #b7b7f7",
+        borderBottom: "1px solid rgba(255, 255, 224, 0.361)",
         padding: " 0.8rem 1rem 0.3rem 1rem",
         justifyContent: "space-between",
         alignItems: "center",

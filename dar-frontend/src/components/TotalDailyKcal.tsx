@@ -1,13 +1,16 @@
 import moment from "moment";
+import { ReactNode } from "react";
 
 export const TotalDailyKcal = ({
   allMeals,
   toggleWeekData,
   weekDataShown,
+  children,
 }: {
   allMeals: any;
   weekDataShown: boolean;
   toggleWeekData: () => void;
+  children: ReactNode;
 }) => {
   const meals = allMeals.filter((meal: { created_at: moment.MomentInput }) => {
     return moment(meal.created_at).isBetween(
@@ -22,20 +25,26 @@ export const TotalDailyKcal = ({
 
   return (
     <>
-      <div className="toggle-switch">
-        <input
-          type="checkbox"
-          className="toggle-switch-checkbox"
-          name="toggleSwitch"
-          id="toggleSwitch"
-          onClick={toggleWeekData}
-        />
+      <div className="toggle-container row">
         <label className="toggle-switch-label" htmlFor="toggleSwitch">
-          {weekDataShown ? "Weekly data" : "daily data"}
+          daily data
+        </label>
+        <div className="toggle-switch">
+          <input
+            type="checkbox"
+            className="toggle-switch-checkbox"
+            name="toggleSwitch"
+            id="toggleSwitch"
+            onClick={toggleWeekData}
+          />
+        </div>
+        <label className="toggle-switch-label" htmlFor="toggleSwitch">
+          weekly data
         </label>
       </div>
       <div>Today's eating events count: {meals.length}</div>
       <div>Today's total calories count: {totalKcal()} kcal</div>
+      {children}
     </>
   );
 };
