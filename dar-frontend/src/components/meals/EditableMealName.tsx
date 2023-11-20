@@ -15,6 +15,7 @@ export const EditableMealName = ({ meal }: { meal: MealType }) => {
       changeHandler={updateName}
       placeholder={meal.name}
       name={meal.name}
+      saveOnlyOnEnterKey={true}
     />
   );
 };

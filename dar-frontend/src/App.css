@@ -20,6 +20,9 @@
         height: 100%;
         margin: 0 auto;
     }
+    --main-purple: brown;
+    --main-yellow: #ebeb0679;
+    --white: #ffffffd6;
 }
 
 a {
@@ -137,7 +140,7 @@ li {
     display: flex;
     flex-direction: row;
     gap: 1.5rem;
-    background: #ebeb0679;
+    background: var(--main-yellow);
     padding: 0.5rem;
     flex-wrap: wrap;
     @media screen and (max-width: 800px) {
@@ -230,7 +233,7 @@ li {
     align-items: center;
     color: #7a9f83;
     font-size: 1.1rem;
-    background-color: #ffffffd6;
+    background-color: var(--white);
     @media screen and (max-width: 800px) {
         max-width: 100%;
     }
@@ -370,4 +373,40 @@ li {
     to {
         left: -1rem;
     }
+}
+
+
+/* pie chart */
+
+.container .slice {
+    transition-duration: 0.3s;
+    transition-property: filter, opacity;
+    filter: saturate(100%);
+    opacity: 1;
+    cursor: pointer;
+}
+
+.container .slice text,
+line {
+    visibility: hidden;
+}
+
+.container.hasHighlight .slice text,
+line {
+    visibility: hidden;
+}
+
+.container.hasHighlight .slice {
+    filter: saturate(50%);
+    opacity: 0.35;
+}
+
+.container.hasHighlight .slice:hover {
+    filter: saturate(100%);
+    opacity: 1;
+}
+
+.container.hasHighlight .slice:hover text,
+line {
+    visibility: visible;
 }

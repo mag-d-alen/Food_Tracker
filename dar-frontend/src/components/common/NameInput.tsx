@@ -23,6 +23,7 @@ export const NameInput = ({
 
   const changeSubmit = () => {
     changeHandler("name", newName);
+    setIsEditing(false);
   };
   const debouncedChangeSubmit = useDebounce(changeSubmit);
 

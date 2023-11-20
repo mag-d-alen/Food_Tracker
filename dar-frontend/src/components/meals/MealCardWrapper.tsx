@@ -22,7 +22,7 @@ export const MealCardWrapper = forwardRef<HTMLDivElement, PropsType>(
     const { id: mealId, food_items: mealFoodItems } = meal;
 
     const addNewFoodItem = (item: SingleFoodItemType, qty: string) => {
-      const calculatedKcal = item.kcal * Number(qty);
+      const calculatedKcal = item.kcal ? item.kcal * Number(qty) : 0;
       const newItem = {
         qty: qty,
         total_kcal: calculatedKcal,

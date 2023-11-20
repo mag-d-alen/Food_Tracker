@@ -11,14 +11,13 @@ import { MealCardDate } from "./MealCardDate";
 import { MealCardFoodItemCard } from "./MealCardFoodItemCard";
 import { EditableMealName } from "./EditableMealName";
 import { GraphsContainer } from "../graphs/GraphsContainer";
+import { ModalContext } from "../../app/ModalContext";
 
 export const MealsList = () => {
   const { data: allMeals, isLoading } = useGetAllMealsQuery({
     refetchOnMountOrArgChange: true,
   });
 
-  const [addMealVisible, setAddMealVisible] = useState(false);
-  const toggleAddMealForm = () => setAddMealVisible(!addMealVisible);
   const [weekDataShown, setWeekDataShown] = useState(false);
 
   const meals = allMeals?.filter((meal: { created_at: moment.MomentInput }) => {
@@ -36,7 +35,7 @@ export const MealsList = () => {
     <div style={{ display: "flex", flexDirection: "column" }}>
       <LoadingToasts isLoading={isLoading} isError={false} isSuccess={false} />
 
-      {!addMealVisible && meals ? (
+      {meals ? (
         <>
           <h2>
             Meals {weekDataShown ? `${weekAgo} - ${todaysDate}` : todaysDate}
@@ -46,45 +45,41 @@ export const MealsList = () => {
             toggleWeekData={() => setWeekDataShown(!weekDataShown)}
             weekDataShown={weekDataShown}
           >
-            <GraphsContainer />
+            <GraphsContainer weekDataShown={weekDataShown} data={meals} />
           </TotalDailyKcal>
-        </>
-      ) : null}
 
-      <div className="list-container">
-        {!addMealVisible ? (
-          <button onClick={toggleAddMealForm}>Add a meal</button>
-        ) : null}
-        {addMealVisible ? (
-          <AddMealModal closeAddMeal={toggleAddMealForm} />
-        ) : null}
-        {meals ? (
-          <div className="meals-list">
-            {meals.map((meal: JSX.IntrinsicAttributes & MealType) => (
-              <MealCardWrapper key={meal.id} item={meal}>
-                <EditableMealName meal={meal} />
-                <MealCardDate detail={meal.created_at} />
-                {meal.food_items ? (
-                  <>
-                    {meal.food_items.map((item: any) => (
-                      <MealCardFoodItemCard
-                        key={item.id}
-                        item={item}
-                        meal={meal}
-                      />
-                    ))}
-                    <div>total kcal: {meal.total_meal_kcal}</div>
-                  </>
-                ) : (
-                  <div>No food recorded</div>
-                )}
-              </MealCardWrapper>
-            ))}
+          <div className="list-container">
+            <ModalContext>
+              <AddMealModal />
+            </ModalContext>
+
+            <div className="meals-list">
+              {meals.map((meal: JSX.IntrinsicAttributes & MealType) => (
+                <MealCardWrapper key={meal.id} item={meal}>
+                  <EditableMealName meal={meal} />
+                  <MealCardDate detail={meal.created_at} />
+                  {meal.food_items ? (
+                    <>
+                      {meal.food_items.map((item: any) => (
+                        <MealCardFoodItemCard
+                          key={item.id}
+                          item={item}
+                          meal={meal}
+                        />
+                      ))}
+                      <div>total kcal: {meal.total_meal_kcal}</div>
+                    </>
+                  ) : (
+                    <div>No food recorded</div>
+                  )}
+                </MealCardWrapper>
+              ))}
+            </div>
           </div>
-        ) : (
-          <div>No recent meals</div>
-        )}
-      </div>
+        </>
+      ) : (
+        <div>No recent meals</div>
+      )}
     </div>
   );
 };

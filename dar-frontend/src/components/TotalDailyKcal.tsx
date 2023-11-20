@@ -27,7 +27,7 @@ export const TotalDailyKcal = ({
     <>
       <div className="toggle-container row">
         <label className="toggle-switch-label" htmlFor="toggleSwitch">
-          daily data
+          today's meals
         </label>
         <div className="toggle-switch">
           <input
@@ -39,7 +39,7 @@ export const TotalDailyKcal = ({
           />
         </div>
         <label className="toggle-switch-label" htmlFor="toggleSwitch">
-          weekly data
+          meals this week
         </label>
       </div>
       <div>Today's eating events count: {meals.length}</div>
