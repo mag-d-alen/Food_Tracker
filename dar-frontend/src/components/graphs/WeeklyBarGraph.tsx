@@ -2,11 +2,13 @@ import { BarGraph } from "../common/BarGraph";
 import { MealType } from "../../types";
 import moment from "moment";
 import { DATE_FORMAT } from "../../app/constants";
-import { useState } from "react";
 import { PieChart } from "../common/PieChart";
+import { useDispatch, useSelector } from "react-redux";
+import { SliceDataType, setPieData } from "../../app/localSlice";
 
 export const WeeklyBarGraph = ({ data }: { data: MealType[] }) => {
-  const [pieData, setPieData] = useState<{ name: string; value: number }[]>([]);
+  const dispatch = useDispatch();
+  const pieData = useSelector((state: any) => state.pieData.pieData);
 
   const bucketData = data.map((d: MealType) => {
     return {
@@ -22,7 +24,8 @@ export const WeeklyBarGraph = ({ data }: { data: MealType[] }) => {
     const dayToPie = data.filter(
       (d) => moment(d.created_at).format(DATE_FORMAT) == clickedDay.name
     );
-    const pieData: { name: string; value: number }[] = [];
+
+    let pieData: SliceDataType[] = [];
     dayToPie.map((d) =>
       d.food_items.forEach((food) =>
         pieData.push({
@@ -31,7 +34,7 @@ export const WeeklyBarGraph = ({ data }: { data: MealType[] }) => {
         })
       )
     );
-    setPieData(pieData);
+    dispatch(setPieData(pieData));
   };
 
   return (
@@ -42,12 +45,11 @@ export const WeeklyBarGraph = ({ data }: { data: MealType[] }) => {
           maxValue={maxValue}
           domain={mealDays}
           getBarData={findDay}
-          width={200}
         />
       </div>
       <div className="graphs--graph-container">
-        {pieData.length ? (
-          <PieChart data={pieData} />
+        {pieData ? (
+          <PieChart />
         ) : (
           <sub>
             {"Click on a day bar to see food stats".toLocaleUpperCase()}

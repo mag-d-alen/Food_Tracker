@@ -1,17 +1,19 @@
 import { BarGraph } from "../common/BarGraph";
 import { MealType } from "../../types";
-import { SetStateAction, useState } from "react";
 import { PieChart } from "../common/PieChart";
+import { useDispatch, useSelector } from "react-redux";
+import { SliceDataType, setPieData } from "../../app/localSlice";
 
 export const DailyBarGraph = ({ data }: { data: MealType[] }) => {
-  const [pieData, setPieData] = useState<{ name: string; value: number }[]>([]);
+  const dispatch = useDispatch();
+  const pieData = useSelector((state: any) => state.pieData.pieData);
   const bucketData = data.map((d: MealType) => {
     return { name: d.name, value: d.total_meal_kcal };
   });
   const maxValue =
     bucketData.sort((a, b) => b.value - a.value)[0]?.value || 100;
   const getPieData = (clickedMeal: { value: number; name: string }) => {
-    const foodsArray: SetStateAction<{ name: string; value: number }[]> = [];
+    const foodsArray: SliceDataType[] = [];
     const chosenMealFoods = data.filter((m) => m.name == clickedMeal.name)[0]
       .food_items;
     chosenMealFoods.map((f) =>
@@ -20,7 +22,7 @@ export const DailyBarGraph = ({ data }: { data: MealType[] }) => {
         value: f.total_kcal,
       })
     );
-    setPieData(foodsArray);
+    dispatch(setPieData(foodsArray));
   };
   return (
     <>
@@ -33,8 +35,8 @@ export const DailyBarGraph = ({ data }: { data: MealType[] }) => {
         />
       </div>
       <div className="graphs--graph-container">
-        {pieData.length ? (
-          <PieChart data={pieData} />
+        {pieData ? (
+          <PieChart />
         ) : (
           <sub>
             {"Click on a day bar to see food stats".toLocaleUpperCase()}

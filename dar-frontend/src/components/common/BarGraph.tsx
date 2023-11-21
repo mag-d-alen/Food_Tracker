@@ -35,13 +35,13 @@ export const BarGraph = forwardRef<any, GraphProps>(
         .domain(domain)
         .range([0, boundsHeight])
         .padding(BAR_PADDING);
-    }, [bucketData, HEIGHT]);
+    }, [bucketData, height]);
 
     // X axis: the length of bar is the kcal intake
 
     const xScale = useMemo(() => {
       return d3.scaleLinear().domain([0, maxValue]).range([0, boundsWidth]);
-    }, [bucketData, WIDTH]);
+    }, [bucketData, width]);
     const allShapes = bucketData.map((d) => {
       const y = yScale(d.name);
       if (y === undefined) {
