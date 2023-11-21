@@ -4,14 +4,15 @@ import { useGetAllMealsQuery } from "../../app/apiSlice";
 import { useState } from "react";
 import { AddMealModal } from "./AddMealModal";
 import moment from "moment";
-import { TotalDailyKcal } from "../TotalDailyKcal";
+import { Stats } from "../Stats";
 import { LoadingToasts } from "../LoadingToasts";
 import { MealCardWrapper } from "./MealCardWrapper";
 import { MealCardDate } from "./MealCardDate";
 import { MealCardFoodItemCard } from "./MealCardFoodItemCard";
 import { EditableMealName } from "./EditableMealName";
-import { GraphsContainer } from "../graphs/GraphsContainer";
 import { ModalContext } from "../../app/ModalContext";
+import { DailyBarGraph } from "../graphs/DailyBarGraph";
+import { WeeklyBarGraph } from "../graphs/WeeklyBarGraph";
 
 export const MealsList = () => {
   const { data: allMeals, isLoading } = useGetAllMealsQuery({
@@ -37,16 +38,21 @@ export const MealsList = () => {
 
       {meals ? (
         <>
-          <h2>
+          <header>
             Meals {weekDataShown ? `${weekAgo} - ${todaysDate}` : todaysDate}
-          </h2>
-          <TotalDailyKcal
+          </header>
+
+          <Stats
             allMeals={meals}
             toggleWeekData={() => setWeekDataShown(!weekDataShown)}
             weekDataShown={weekDataShown}
           >
-            <GraphsContainer weekDataShown={weekDataShown} data={meals} />
-          </TotalDailyKcal>
+            {weekDataShown ? (
+              <WeeklyBarGraph data={meals} />
+            ) : (
+              <DailyBarGraph data={meals} />
+            )}
+          </Stats>
 
           <div className="list-container">
             <ModalContext>

@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
 import * as d3 from "d3";
-import { Slice } from "../common/Slice";
+import { PieSlice } from "./PieSlice";
 import { HEIGHT, WIDTH } from "../../app/constants";
 
 export type DataItem = {
@@ -26,7 +26,7 @@ export const PieChart = ({ data }: PieChartProps) => {
   }, [data]);
 
   const allPaths = pie.map((slice, i) => {
-    return <Slice key={i} slice={slice} color={colors[i]} ref={ref} />;
+    return <PieSlice key={i} slice={slice} color={colors[i]} ref={ref} />;
   });
 
   return (

@@ -23,7 +23,7 @@ export const AuthForm = ({
   return (
     <>
       <form
-        style={{ margin: "3rem 0" }}
+        style={{ margin: "3rem 0", gap: "0.3rem" }}
         className="col centered"
         onSubmit={(e: any) => {
           e.preventDefault();
@@ -38,7 +38,7 @@ export const AuthForm = ({
         {children}
         <button type="submit">subimt</button>
       </form>
-      <p>{navigationButtonText}</p>
+      <p>{navigationButtonText.toLocaleUpperCase()}</p>
       <button onClick={() => navigate(`/${navigationlink}`)}>
         {navigationlink}
       </button>
@@ -46,12 +46,7 @@ export const AuthForm = ({
   );
 };
 
-export const Input = ({
-  name,
-  placeholder,
-
-  type = "text",
-}: InputPropTypes) => {
+export const Input = ({ name, placeholder, type = "text" }: InputPropTypes) => {
   const [fieldVal, setFieldVal] = useState({ label: name, value: "" });
 
   const handleChange = (e: any) => {

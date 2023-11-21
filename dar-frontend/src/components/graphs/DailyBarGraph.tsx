@@ -1,7 +1,7 @@
 import { BarGraph } from "../common/BarGraph";
 import { MealType } from "../../types";
-import { PieChart } from "./PieChart";
 import { SetStateAction, useState } from "react";
+import { PieChart } from "../common/PieChart";
 
 export const DailyBarGraph = ({ data }: { data: MealType[] }) => {
   const [pieData, setPieData] = useState<{ name: string; value: number }[]>([]);
@@ -24,17 +24,23 @@ export const DailyBarGraph = ({ data }: { data: MealType[] }) => {
   };
   return (
     <>
-      <BarGraph
-        bucketData={bucketData}
-        domain={bucketData.map((d) => d.name)}
-        maxValue={maxValue}
-        getBarData={getPieData}
-      />
-      {pieData.length ? (
-        <PieChart data={pieData} />
-      ) : (
-        <sub>{"Click on a day bar to see food stats".toLocaleUpperCase()}</sub>
-      )}
+      <div className="graphs--graph-container">
+        <BarGraph
+          bucketData={bucketData}
+          domain={bucketData.map((d) => d.name)}
+          maxValue={maxValue}
+          getBarData={getPieData}
+        />
+      </div>
+      <div className="graphs--graph-container">
+        {pieData.length ? (
+          <PieChart data={pieData} />
+        ) : (
+          <sub>
+            {"Click on a day bar to see food stats".toLocaleUpperCase()}
+          </sub>
+        )}
+      </div>
     </>
   );
 };

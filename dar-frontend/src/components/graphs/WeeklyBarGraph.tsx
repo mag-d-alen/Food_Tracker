@@ -1,12 +1,13 @@
 import { BarGraph } from "../common/BarGraph";
 import { MealType } from "../../types";
 import moment from "moment";
-import { DATE_FORMAT, HEIGHT, WIDTH } from "../../app/constants";
-import { PieChart } from "./PieChart";
+import { DATE_FORMAT } from "../../app/constants";
 import { useState } from "react";
+import { PieChart } from "../common/PieChart";
 
 export const WeeklyBarGraph = ({ data }: { data: MealType[] }) => {
   const [pieData, setPieData] = useState<{ name: string; value: number }[]>([]);
+
   const bucketData = data.map((d: MealType) => {
     return {
       name: moment(d.created_at).format(DATE_FORMAT),
@@ -35,17 +36,24 @@ export const WeeklyBarGraph = ({ data }: { data: MealType[] }) => {
 
   return (
     <>
-      <BarGraph
-        bucketData={bucketData}
-        maxValue={maxValue}
-        domain={mealDays}
-        getBarData={findDay}
-      />
-      {pieData.length ? (
-        <PieChart data={pieData} />
-      ) : (
-        <sub>{"Click on a day bar to see food stats".toLocaleUpperCase()}</sub>
-      )}
+      <div className="graphs--graph-container">
+        <BarGraph
+          bucketData={bucketData}
+          maxValue={maxValue}
+          domain={mealDays}
+          getBarData={findDay}
+          width={200}
+        />
+      </div>
+      <div className="graphs--graph-container">
+        {pieData.length ? (
+          <PieChart data={pieData} />
+        ) : (
+          <sub>
+            {"Click on a day bar to see food stats".toLocaleUpperCase()}
+          </sub>
+        )}
+      </div>
     </>
   );
 };

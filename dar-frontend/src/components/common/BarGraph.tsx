@@ -8,12 +8,24 @@ export type GraphProps = {
   maxValue: number;
   domain: string[];
   getBarData: (d: { name: string; value: number }) => void;
+  width?: number;
+  height?: number;
 };
 
 export const BarGraph = forwardRef<any, GraphProps>(
-  ({ bucketData, domain, maxValue, getBarData }, ref) => {
-    const boundsWidth = WIDTH - MARGIN.right - MARGIN.left;
-    const boundsHeight = HEIGHT - MARGIN.top - MARGIN.bottom;
+  (
+    {
+      bucketData,
+      domain,
+      maxValue,
+      getBarData,
+      width = WIDTH,
+      height = HEIGHT,
+    },
+    ref
+  ) => {
+    const boundsWidth = width - MARGIN.right - MARGIN.left;
+    const boundsHeight = height - MARGIN.top - MARGIN.bottom;
 
     // Y axis: the for meals since the barplot is horizontal
 
@@ -79,18 +91,16 @@ export const BarGraph = forwardRef<any, GraphProps>(
       ));
 
     return (
-      <div style={{ backgroundColor: "#ffffff63F" }}>
-        <svg width={460} height={400} id="barchart" ref={ref}>
-          <g
-            width={boundsWidth}
-            height={boundsHeight}
-            transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}
-          >
-            {grid}
-            {allShapes}
-          </g>
-        </svg>
-      </div>
+      <svg width={460} height={400} id="barchart" ref={ref}>
+        <g
+          width={boundsWidth}
+          height={boundsHeight}
+          transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}
+        >
+          {grid}
+          {allShapes}
+        </g>
+      </svg>
     );
   }
 );

@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 import { animated, useSpring } from "react-spring";
-import { DataItem } from "../graphs/PieChart";
+import { DataItem } from "./PieChart";
 import { forwardRef } from "react";
 import { PieLegend } from "./PieLegend";
 import { RADIUS } from "../../app/constants";
@@ -9,7 +9,7 @@ type SliceProps = {
   slice: d3.PieArcDatum<DataItem>;
 };
 
-export const Slice = forwardRef<SVGElement, SliceProps>(
+export const PieSlice = forwardRef<SVGElement | null, SliceProps>(
   ({ slice, color }, ref) => {
     const arcPathGenerator = d3.arc();
 
@@ -31,11 +31,11 @@ export const Slice = forwardRef<SVGElement, SliceProps>(
     return (
       <g
         className={"slice"}
-        onMouseOver={() => {
+        onMouseEnter={() => {
           //@ts-ignore
           ref.current && ref.current.classList.add("hasHighlight");
         }}
-        onMouseOut={() => {
+        onMouseLeave={() => {
           //@ts-ignore
           ref.current && ref.current.classList.remove("hasHighlight");
         }}
