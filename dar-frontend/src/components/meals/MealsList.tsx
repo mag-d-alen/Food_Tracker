@@ -10,55 +10,34 @@ import { MealCardWrapper } from "./MealCardWrapper";
 import { MealCardDate } from "./MealCardDate";
 import { MealCardFoodItemCard } from "./MealCardFoodItemCard";
 import { EditableMealName } from "./EditableMealName";
-import { ModalContext } from "../../app/ModalContext";
-import { DailyBarGraph } from "../graphs/DailyBarGraph";
-import { WeeklyBarGraph } from "../graphs/WeeklyBarGraph";
+
+import { Header } from "./Header";
+import { useSelector } from "react-redux";
 
 export const MealsList = () => {
   const { data: allMeals, isLoading } = useGetAllMealsQuery({
     refetchOnMountOrArgChange: true,
   });
 
-  const [weekDataShown, setWeekDataShown] = useState(false);
-
+  const displayWeek = useSelector((state: any) => state.local.displayWeek);
   const meals = allMeals?.filter((meal: { created_at: moment.MomentInput }) => {
     return moment(meal.created_at).isBetween(
-      weekDataShown
+      displayWeek
         ? moment().subtract(7, "days")
         : moment().subtract(24, "hours"),
       moment()
     );
   });
-  const todaysDate = moment().format("DD.MM.YYYY");
-  const weekAgo = moment().subtract(7, "days").format("DD.MM.YYYY");
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <LoadingToasts isLoading={isLoading} isError={false} isSuccess={false} />
-
       {meals ? (
         <>
-          <header>
-            Meals {weekDataShown ? `${weekAgo} - ${todaysDate}` : todaysDate}
-          </header>
-
-          <Stats
-            allMeals={meals}
-            toggleWeekData={() => setWeekDataShown(!weekDataShown)}
-            weekDataShown={weekDataShown}
-          >
-            {weekDataShown ? (
-              <WeeklyBarGraph data={meals} />
-            ) : (
-              <DailyBarGraph data={meals} />
-            )}
-          </Stats>
-
+          <Header />
+          <Stats mealsDisplayed={meals} />
           <div className="list-container">
-            <ModalContext>
-              <AddMealModal />
-            </ModalContext>
-
+            <AddMealModal />
             <div className="meals-list">
               {meals.map((meal: JSX.IntrinsicAttributes & MealType) => (
                 <MealCardWrapper key={meal.id} item={meal}>

@@ -1,9 +1,8 @@
-import { useContext } from "react";
+import { useState } from "react";
 import { useAddMealMutation } from "../../app/apiSlice";
 import { FoodItemType } from "../../types";
 import { LoadingToasts } from "../LoadingToasts";
 import { NameInput } from "../common/NameInput";
-import { AddMealContext } from "../../app/ModalContext";
 
 export type newMealType = {
   name: string;
@@ -14,7 +13,8 @@ export type newMealType = {
 
 export const AddMealModal = () => {
   //@ts-ignore
-  const { addMealVisible, toggleAddMealForm } = useContext(AddMealContext);
+  const [addMealVisible, setAddMealVisible] = useState(false);
+  const toggleAddMealForm = () => setAddMealVisible(!addMealVisible);
   const [createMeal, { isLoading, isError }] = useAddMealMutation();
   const addMeal = (key: string, val: string) => {
     createMeal({
@@ -25,7 +25,9 @@ export const AddMealModal = () => {
 
   return (
     <>
-      <button onClick={toggleAddMealForm}>Add a meal</button>
+      <div className="stick-to-bottom">
+        <button onClick={toggleAddMealForm}>Add a meal</button>
+      </div>
       {addMealVisible ? (
         <div className="modal--backdrop">
           <div className="modal--container">
@@ -41,7 +43,6 @@ export const AddMealModal = () => {
                 asInput={true}
                 saveOnlyOnEnterKey={true}
               />
-              {/* {mealName ? <button onClick={addMeal}>save</button> : null} */}
             </div>
           </div>
         </div>

@@ -2,14 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { apiSlice } from "./apiSlice";
 import { authSlice } from "./authSlice";
-import { pieSlice } from "./localSlice";
+import { localSlice } from "./localSlice";
 
 export const store = configureStore({
   reducer: {
     // Add the generated reducer as a specific top-level slice
     [apiSlice.reducerPath]: apiSlice.reducer,
     [authSlice.reducerPath]: authSlice.reducer,
-    pieData: pieSlice.reducer,
+    local: localSlice.reducer,
 
     // auth: authSlice.reducer,
   },

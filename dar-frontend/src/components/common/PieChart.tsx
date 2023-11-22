@@ -12,7 +12,7 @@ export type PieDataItem = {
 const colors = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"];
 
 export const PieChart = () => {
-  const pieData = useSelector((state: any) => state.pieData.pieData);
+  const pieData = useSelector((state: any) => state.local.pieData);
   const ref = useRef(null);
 
   //translate data to pie; a slice is a d3 PieArcDatum object

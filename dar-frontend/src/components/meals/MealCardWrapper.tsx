@@ -6,6 +6,8 @@ import {
 } from "../../app/apiSlice";
 import { SingleFoodItemType } from "../../types";
 import { MealAddFoodItem } from "./MealAddFoodItem";
+import { setPieData } from "../../app/localSlice";
+import { useDispatch } from "react-redux";
 
 type PropsType = {
   item: any;
@@ -16,7 +18,7 @@ export const MealCardWrapper = forwardRef<HTMLDivElement, PropsType>(
   ({ item, existingMeal = true, children }, ref?) => {
     const [deleteMeal] = useDeleteMealMutation();
     const [setChanges] = useUpdateMealMutation();
-
+    const dispatch = useDispatch();
     const [addItemVisible, setAddItemVisible] = useState(false);
     const meal = existingMeal ? item : useGetMealQuery(item.id);
     const { id: mealId, food_items: mealFoodItems } = meal;
@@ -31,6 +33,7 @@ export const MealCardWrapper = forwardRef<HTMLDivElement, PropsType>(
       };
       setAddItemVisible(false);
       saveChanges({ food_items: [...mealFoodItems, newItem] });
+      dispatch(setPieData([]));
     };
 
     const saveChanges = ({
@@ -49,6 +52,7 @@ export const MealCardWrapper = forwardRef<HTMLDivElement, PropsType>(
         food_items: updatedFoodItems,
       };
       setChanges(updatedMeal);
+      dispatch(setPieData([]));
     };
 
     return (

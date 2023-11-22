@@ -1,45 +1,35 @@
-import moment from "moment";
-import { ReactNode } from "react";
 import { ToggleButton } from "./common/ToggleButton";
+import { useDispatch, useSelector } from "react-redux";
+import { setDisplayWeek, setPieData } from "../app/localSlice";
+import { Graphs } from "./graphs/Graphs";
+import { MealType } from "../types";
 
-export const Stats = ({
-  allMeals,
-  toggleWeekData,
-  weekDataShown,
-  children,
-}: {
-  allMeals: any;
-  weekDataShown: boolean;
-  toggleWeekData: () => void;
-  children: ReactNode;
-}) => {
-  const meals = allMeals.filter((meal: { created_at: moment.MomentInput }) => {
-    return moment(meal.created_at).isBetween(
-      weekDataShown
-        ? moment().subtract(7, "days")
-        : moment().subtract(24, "hours"),
-      moment()
-    );
-  });
-  const daylyTotalKcal = () =>
-    meals.reduce((acc: number, i: any) => acc + i.total_meal_kcal, 0);
+export const Stats = ({ mealsDisplayed }: { mealsDisplayed: MealType[] }) => {
+  const displayWeek = useSelector((state: any) => state.local.displayWeek);
+  const dispatch = useDispatch();
+
+  const dailyTotalKcal = () =>
+    mealsDisplayed.reduce((acc: number, i: any) => acc + i.total_meal_kcal, 0);
 
   return (
     <>
       <ToggleButton
         labelLeft={"today's meals"}
         labelRight={"meals this week"}
-        toggleWeekData={toggleWeekData}
+        toggleWeekData={() => {
+          dispatch(setDisplayWeek(!displayWeek));
+          dispatch(setPieData([]));
+        }}
       />
       <div>
-        {weekDataShown ? "This week's" : "Today's"} eating events count:{" "}
-        {meals.length}
+        {displayWeek ? "This week's" : "Today's"} eating events count:{" "}
+        {mealsDisplayed?.length}
       </div>
       <div>
-        {weekDataShown ? "This week's" : "Today's"} total calories count:{" "}
-        {daylyTotalKcal()} kcal
+        {displayWeek ? "This week's" : "Today's"} total calories count:{" "}
+        {dailyTotalKcal()} kcal
       </div>
-      <div className="graphs-container">{children}</div>
+      <Graphs data={mealsDisplayed} />
     </>
   );
 };

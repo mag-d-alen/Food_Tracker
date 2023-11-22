@@ -23,6 +23,7 @@
     --main-purple: brown;
     --main-yellow: #ebeb0679;
     --white: #ffffffd6;
+    --red: #fc1919bd;
 }
 
 a {
@@ -40,6 +41,7 @@ body {
     margin: 0;
     color: white;
     min-height: 100vh;
+    overflow: auto;
 }
 
 h1 {
@@ -202,7 +204,7 @@ li {
 }
 
 header {
-    margin: auto;
+    margin: 1rem auto 0.5rem auto;
     width: fit-content;
     font-size: large;
     text-transform: uppercase;
@@ -439,4 +441,27 @@ line {
 .container.hasHighlight .slice:hover text,
 line {
     visibility: visible;
+}
+
+.stick-to-bottom {
+    position: fixed;
+    width: 100%;
+    padding-right: 5rem;
+    top: 6rem;
+    display: flex;
+    justify-content: flex-end;
+    -webkit-transform: translateZ(0);
+    @media screen and (max-width: 800px) {
+        display: flex;
+        justify-content: center;
+        top: 90%;
+        padding: 0;
+    }
+}
+
+.stick-to-bottom button {
+    background-color: var(--red);
+    padding: 1rem 2rem;
+    color: white;
+    font-weight: 700;
 }
