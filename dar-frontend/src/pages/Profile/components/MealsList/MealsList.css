@@ -1,0 +1,9 @@
+
+.meals-list {
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+    overflow-y: auto;
+    border-radius: 0.3rem;
+    width: 70vw;
+  }

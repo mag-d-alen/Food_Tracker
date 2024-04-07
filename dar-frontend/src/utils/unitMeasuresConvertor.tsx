@@ -1,6 +1,6 @@
-import { UnitChoicesType } from "../types";
+import { UnitChoices } from "../app/types";
 
-const unitChoices: UnitChoicesType = {
+const unitChoices: UnitChoices = {
   GR: "100 gram",
   PC: "1 piece",
   TBS: "1 table spoon",
@@ -9,6 +9,6 @@ const unitChoices: UnitChoicesType = {
 };
 
 export const convertUnit = (unit: any): string => {
-  const dynamicKey: keyof UnitChoicesType = unit;
+  const dynamicKey: keyof UnitChoices = unit;
   return unitChoices[dynamicKey];
 };

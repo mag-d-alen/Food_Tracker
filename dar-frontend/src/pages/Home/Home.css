@@ -1,0 +1,56 @@
+.graphs-container {
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.graphs--graph-container {
+  flex: 1;
+  cursor: pointer;
+}
+
+.slice {
+  transition-duration: 0.3s;
+  transition-property: filter, opacity;
+  cursor: pointer;
+  opacity: 0.8;
+  filter: saturate(0.7);
+  text {
+    visibility: hidden;
+  }
+}
+.slice:hover {
+  opacity: 1;
+  filter: saturate(1);
+  text {
+    visibility: visible;
+  }
+}
+
+.stick-to-bottom {
+  position: fixed;
+  width: 100%;
+  padding-right: 5rem;
+  top: 6rem;
+  display: flex;
+  justify-content: flex-end;
+  @media screen and (max-width: 800px) {
+    display: flex;
+    justify-content: center;
+    top: 90%;
+    padding: 0;
+  }
+}
+
+.stick-to-bottom button {
+  background-color: var(--red);
+  padding: 1rem 2rem;
+  color: white;
+  font-weight: 700;
+}

@@ -1,0 +1,60 @@
+.meals__meal-card--container {
+  padding: 1.5rem;
+  border: 1px solid lightgray;
+  border-radius: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--light-orange);
+  color: black;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.card__title {
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.card__input {
+  border-radius: 0.3rem;
+  border: 0.5px solid rgb(176, 207, 176);
+  padding: 0.6em 1.2em;
+  font-weight: 500;
+  font-family: inherit;
+  transition: border-color 0.25s;
+  text-transform: uppercase;
+  margin: 0 10%;
+  min-width: fit-content;
+  flex: 1;
+}
+.card__food-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 0.5rem 1rem 0;
+  gap: 0.5rem;
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+}
+
+.card__food-item--container {
+  display: flex;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 224, 0.361);
+  padding: 1rem 0 0.3rem 0;
+  justify-content: center;
+}
+.meals__meal-card--buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  gap: 0.5rem;
+  @media screen and (max-width: 600px) {
+    margin-top: 1.5rem;
+    flex-direction: column;
+    align-items: center;
+  }
+}

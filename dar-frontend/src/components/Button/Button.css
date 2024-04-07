@@ -1,0 +1,32 @@
+.button {
+  font-weight: 600;
+  width: fit-content;
+  height: fit-content;
+  padding: 0.5rem 2rem;
+  border-radius: 20px;
+  margin-bottom: 0.5rem;
+  :hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+  @media screen and (max-width: 800px) {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+}
+.primary {
+  background-color: var(--accent-orange);
+  color: var(--transparent-white);
+}
+.secondary {
+  background-color: var(--dark-green);
+  border: 1px solid var(--transparent-white);
+  color: var(--transparent-white);
+}
+.button-container {
+  display: flex;
+}
+.disabled {
+  opacity: 0.5;
+}

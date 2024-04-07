@@ -1,13 +1,12 @@
-// Or from '@reduxjs/toolkit/query/react'
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { MealType, SingleFoodItemType } from "../types";
+import { Meal, FoodItem } from "./types";
 
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8000/api",
-    prepareHeaders: (headers: any) => {
-      const token = localStorage.getItem("token");
+    prepareHeaders: (headers: Headers) => {
+      const token = window.sessionStorage.getItem("token");
       if (token) {
         headers.set("Authorization", `Bearer ${JSON.parse(token)}`);
       }
@@ -20,14 +19,11 @@ export const apiSlice = createApi({
       providesTags: ["FoodItem"],
     }),
 
-    getFoodItem: builder.query<SingleFoodItemType, number>({
+    getFoodItem: builder.query<FoodItem, number>({
       query: (id: number) => `/fooditems/${id}/`,
     }),
 
-    updateFoodItem: builder.mutation<
-      SingleFoodItemType,
-      Partial<SingleFoodItemType>
-    >({
+    updateFoodItem: builder.mutation<FoodItem, Partial<FoodItem>>({
       query: (body) => ({
         url: `/fooditems/${body.id}/`,
         method: "PATCH",
@@ -38,7 +34,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["FoodItem"],
     }),
 
-    addFoodItem: builder.mutation<void, any>({
+    addFoodItem: builder.mutation<void, Partial<FoodItem>>({
       query: (body) => ({
         url: "/fooditems/",
         method: "POST",
@@ -55,17 +51,17 @@ export const apiSlice = createApi({
       invalidatesTags: ["FoodItem"],
     }),
 
-    getAllMeals: builder.query<MealType[], any>({
+    getAllMeals: builder.query({
       query: () => `/meals`,
       providesTags: ["Meal"],
     }),
 
-    getMeal: builder.query<MealType, number>({
+    getMeal: builder.query<Meal, number>({
       query: (id: number) => ({ url: `/meals/${id}/`, providesTags: ["Meal"] }),
     }),
 
-    updateMeal: builder.mutation<any, any>({
-      query: (body: MealType) => ({
+    updateMeal: builder.mutation<void, unknown>({
+      query: (body: Meal) => ({
         url: `/meals/${body.id}/`,
         method: "PUT",
         body: body,
@@ -73,8 +69,8 @@ export const apiSlice = createApi({
       invalidatesTags: ["Meal"],
     }),
 
-    addMeal: builder.mutation<void, any>({
-      query: (body: MealType) => ({
+    addMeal: builder.mutation<Meal, Partial<Meal>>({
+      query: (body: Meal) => ({
         url: "/meals/",
         method: "POST",
         body: body,

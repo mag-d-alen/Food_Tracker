@@ -1,0 +1,60 @@
+.input--outer {
+  padding: 0.5rem 0 0 0;
+}
+.input--container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-weight: 500;
+  font-family: inherit;
+  text-transform: uppercase;
+  width: 100%;
+  min-width: fit-content;
+  opacity: 0.75;
+  color: white;
+}
+.input {
+  font-weight: 500;
+  border-radius: 20px;
+  border: 0.5px solid var(--transparent-white);
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  transition: border-color 0.25s;
+  text-transform: uppercase;
+  min-width: fit-content;
+  background-color: transparent;
+  color: inherit;
+  flex: 1;
+  :active {
+    outline: none;
+    border-color: white;
+  }
+  :focus {
+    outline: none;
+    border-color: white;
+  }
+}
+
+.select {
+  border-radius: 20px;
+  border: 0.5px solid var(--transparent-white);
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  transition: border-color 0.25s;
+  text-transform: uppercase;
+  flex: 1;
+}
+.input--label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  flex: 0.25;
+  text-transform: uppercase;
+}
+.input--display {
+  color: inherit;
+  text-transform: uppercase;
+  text-align: left;
+}

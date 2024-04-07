@@ -1,0 +1,57 @@
+.toggle-container {
+  padding: 0 1rem;
+  gap: 0.5rem;
+  width: fit-content;
+  margin: 0.5rem auto;
+  display: flex;
+  justify-content: center;
+}
+
+.toggle-switch {
+  display: flex;
+  width: 6rem;
+  margin: 1rem auto;
+  background-color: var(--light-green);
+  height: 1.5rem;
+  position: relative;
+  border-radius: 1.3rem;
+  @media screen and (max-width: 800px) {
+    margin: 0.3rem;
+    max-width: 25%;
+  }
+}
+
+.toggle-switch-checkbox {
+  appearance: none;
+  background-color: var(--dark-green);
+  height: 100%;
+  position: relative;
+  animation: goback 0.5s ease-in-out;
+  left: 0rem;
+  border-radius: 1.3rem;
+  width: 60%;
+  margin: 0;
+}
+
+:checked {
+  left: 2.5rem;
+  animation: goforth 0.5s ease-in-out;
+}
+
+@keyframes goforth {
+  from {
+    left: 0rem;
+  }
+  to {
+    left: 2.5rem;
+  }
+}
+
+@keyframes goback {
+  from {
+    left: 2.5rem;
+  }
+  to {
+    left: 0rem;
+  }
+}

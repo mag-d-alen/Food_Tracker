@@ -1,26 +1,40 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/Navbar.tsx";
-import { Home } from "./components/Home.tsx";
-import { FoodItemsList } from "./components/foodItem/FoodItemsList.tsx";
-import { Login } from "./components/auth/Login.tsx";
-import { MealsList } from "./components/meals/MealsList.tsx";
-import { Signup } from "./components/auth/Signup.tsx";
+
+import { Home, LoginPage, Profile, FoodItemsPage, RegisterPage } from "./pages";
 
 function App() {
   return (
-    <>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/my-meals" element={<MealsList />} />
-          <Route path="/food-items" element={<FoodItemsList />} />
-        </Routes>
-      </Router>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<RegisterPage />} />{" "}
+        <Route path="/food-items" element={<FoodItemsPage />} />
+        <Route
+          path="/my-meals"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 export default App;
+export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const isAuthenticated = !!window.sessionStorage.getItem("token");
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
