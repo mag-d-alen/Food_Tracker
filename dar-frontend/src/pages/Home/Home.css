@@ -30,6 +30,7 @@
   filter: saturate(1);
   text {
     visibility: visible;
+    z-index: 1;
   }
 }
 

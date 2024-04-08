@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { useMemo } from "react";
 import { BarItem } from "./BarItem";
-import { BAR_PADDING, HEIGHT, MARGIN, WIDTH } from "@/app/constants";
+import { BAR_PADDING, HEIGHT, MARGIN, WIDTH } from "@/utils";
 
 export type GraphProps = {
   bucketData: { name: string; value: number }[];
@@ -78,8 +78,7 @@ export const BarGraph: React.FC<GraphProps> = ({
           alignmentBaseline="central"
           fontSize={9}
           fill="white"
-          opacity={0.8}
-        >
+          opacity={0.8}>
           {value} kcal
         </text>
       </g>
@@ -90,8 +89,7 @@ export const BarGraph: React.FC<GraphProps> = ({
       <g
         width={boundsWidth}
         height={boundsHeight}
-        transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}
-      >
+        transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}>
         {grid}
         {allShapes}
       </g>

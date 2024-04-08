@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
+import { CloseButton } from "..";
+import { useHideWithDelay } from "@/hooks/useHideWithDelay";
 
 export const Toast = ({
   text,
@@ -8,24 +8,15 @@ export const Toast = ({
   text: string;
   success?: boolean;
 }) => {
-  const [visible, setVisible] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(false);
-    }, 1500);
-    return () => clearTimeout(timer);
-  })
+  const { isVisible, hide } = useHideWithDelay();
   return (
     <>
       <div
         className={`${success ? "success" : "error"} ${
-          visible ? "toast" : "hidden"
-        }`}
-      >
+          isVisible ? "toast" : "hidden"
+        }`}>
         {text}
-        <button className="toast-button-close" onClick={() => setVisible(false)}>
-          <AiOutlineClose />
-        </button>
+        <CloseButton onClick={hide} />
       </div>
     </>
   );

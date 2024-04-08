@@ -1,9 +1,9 @@
 import * as d3 from "d3";
 import { animated, useSpring } from "react-spring";
 import { PieLegend } from "./PieLegend";
-import { RADIUS } from "@/app/constants";
 import { PieDataItem } from "./PieChart";
 import "../../Home.css";
+import { RADIUS } from "@/utils";
 type SliceProps = {
   color: string;
   slice: d3.PieArcDatum<PieDataItem>;

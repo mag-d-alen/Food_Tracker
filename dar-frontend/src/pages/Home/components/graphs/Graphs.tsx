@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { MealFoodItem, Meal } from "@/app/types";
-import { DATE_FORMAT } from "@/app/constants";
 import { PieData } from "@/app/displayMealSlice";
 import { RootState } from "@/app/store";
 import { BarGraph } from "./BarGraph";
 import { PieChart } from "../chart";
 import "../../Home.css";
+import { DATE_FORMAT } from "@/utils";
 
 type GraphsProps = {
   displayedMeals: Meal[];

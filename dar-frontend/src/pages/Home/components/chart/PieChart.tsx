@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import * as d3 from "d3";
 import { PieSlice } from "./PieSlice";
-import { HEIGHT, WIDTH } from "@/app/constants";
+import { HEIGHT, WIDTH } from "@/utils";
 import "../../Home.css";
 
 export type PieDataItem = {
@@ -38,7 +38,7 @@ export const PieChart = ({
   const pie: d3.PieArcDatum<PieDataItem>[] = pieGenerator(pieData);
 
   const allPaths = pie.map((slice, i) => {
-    return <PieSlice key={i} slice={slice} color={colors[i]}  />;
+    return <PieSlice key={i} slice={slice} color={colors[i]} />;
   });
   return (
     <>
